@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+
+<html class="loading" lang="en" data-textdirection="ltr">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0,minimal-ui">
+    <title>EKS</title>
+    <link rel="shortcut icon" type="image/x-icon" href="asst/img/favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500;1,600" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="asst/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="asst/css/bootstrap-extended.min.css">
+    <link rel="stylesheet" href="asst/css/flag-icon.min.css">
+    <link rel="stylesheet" href="asst/plugin/flatpickr/flatpickr.min.css">
+    <link rel="stylesheet" type="text/css" href="asst/css/style.css">
+</head>
+
+<body class="vertical-layout vertical-menu-modern 1-column navbar-floating footer-static  " data-open="click" data-menu="vertical-menu-modern" data-col="1-column">
+    <nav class="header-navbar navbar navbar-expand-lg align-items-center floating-nav navbar-light navbar-shadow container-xxl">
+        <div class="navbar-container d-flex content">
+            <div class="bookmark-wrapper d-flex align-items-center">
+                <ul class="nav navbar-nav bookmark-icons">
+                    <img src="asst/img/logo-bg.png" class="w-100px">
+                </ul>
+            </div>
+            <ul class="nav navbar-nav align-items-center ms-auto">
+                <li class="nav-item d-none d-lg-block"><a href="dashboard.html" class="nav-link nav-link-style"><i class="ficon"
+                    data-feather="home"></i></a></li>
+                <li class="nav-item d-none d-lg-block"><a href="add.html" class="nav-link nav-link-style"><i class="ficon"
+                    data-feather="plus"></i></a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="dropdown-flag" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="ficon" data-feather="grid"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-flag">
+                        <a href="table.html" class="dropdown-item">Attendance</a>
+                        <a class="dropdown-item">Filtration Machine Running</a>
+                        <a class="dropdown-item">Oil Level</a>
+                        <a class="dropdown-item">Oil Stock</a>
+                        <a class="dropdown-item">Hydraulic Oil Temp</a>
+                        <a class="dropdown-item">Oil Consumption</a>
+                        <a class="dropdown-item">PM Activities Carried Out</a>
+                    </div>
+                </li>
+                <li class="nav-item d-none d-lg-block"><a class="nav-link nav-link-style"><i class="ficon"
+                            data-feather="share-2"></i></a></li>
+                <li class="nav-item dropdown dropdown-language">
+                    <a class="nav-link dropdown-toggle" id="dropdown-flag" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="selected-language">SCL - Machine Shop - Oil - Padi</span></a>
+                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-flag">
+                        <a class="dropdown-item" href="#" data-language="en">SCL - Machine Shop - Oil - Padi</a>
+                        <a class="dropdown-item" href="#" data-language="en">SCL - Machine Shop - Coolant - Padi</a>
+                        <a class="dropdown-item" href="#" data-language="en">SCL - Foundry - Padi</a>
+                        <a class="dropdown-item" href="#" data-language="en">SCL - Machine Shop - Org</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown dropdown-user">
+                    <a class="nav-link dropdown-toggle dropdown-user-link" id="dropdown-user" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <div class="user-nav d-sm-flex d-none"><span class="user-name fw-bolder">1000120</span><span class="user-status">Admin</span></div><span class="avatar"><img class="round"
+                                src="asst/img/eks-small-logo.png" alt="avatar" height="40" width="40"><span
+                                class="avatar-status-online"></span></span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-user">
+                        <a class="dropdown-item" href="login.html"><i class="me-50"
+                                data-feather="power"></i> Logout</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="content-wrapper container-lg p-0 mt-1">
+        <div class="content-body">
+            <!-- Basic table -->
+            <section id="basic-datatable  mt-5">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <table class="datatables-basic table w-100">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Name</th>
+                                        <th>Date</th>
+                                        <th>In Time</th>
+                                        <th>Out Time</th>
+                                        <th>Shift</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal to add new record -->
+                <div class="modal modal-slide-in fade" id="modals-slide-in">
+                    <div class="modal-dialog sidebar-sm">
+                        <form class="add-new-record modal-content pt-0">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
+                            <div class="modal-header mb-1">
+                                <h5 class="modal-title" id="exampleModalLabel">New Record</h5>
+                            </div>
+                            <div class="modal-body flex-grow-1">
+                                <div class="mb-1">
+                                    <label class="form-label" for="basic-icon-default-fullname">Name</label>
+                                    <select class="select2 form-select" id="select2-disabled-result">
+                                        <option value="1">Mani</option>
+                                        <option value="2">Gopal</option>
+                                        <option value="3">Mohan</option>
+                                        <option value="4">Babu</option>
+                                        </select>
+                                </div>
+                                <div class="mb-1">
+                                    <label class="form-label " for="basic-icon-default-post">Date</label>
+                                    <input type="text" id="basic-icon-default-post" class="form-control post date" placeholder="MM/DD/YYYY" aria-label="MM/DD/YYYY" />
+                                </div>
+                                <div class="mb-1">
+                                    <label class="form-label" for="basic-icon-default-email">In Time</label>
+                                    <input type="text" id="basic-icon-default-email" class="form-control time" placeholder="00:00" aria-label="00:00" />
+                                </div>
+                                <div class="mb-1">
+                                    <label class="form-label" for="basic-icon-default-date">Out Time</label>
+                                    <input type="text" class="form-control time" id="basic-icon-default-date" placeholder="00:00" aria-label="00:00" />
+                                </div>
+                                <div class="mb-4">
+                                    <label class="form-label" for="basic-icon-default-salary">Shift</label>
+                                    <select class="select2 form-select" id="select2-disabled-result">
+                                        <option value="1">Present</option>
+                                        <option value="2">Absent</option>
+                                        <option value="3">Leave</option>
+                                        </select>
+                                </div>
+                                <button type="button" class="btn btn-primary data-submit me-1">Save</button>
+                                <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    <div class="sidenav-overlay"></div>
+    <div class="drag-target"></div>
+    <script src="asst/js/vendors.min.js"></script>
+    <script src="asst/datatable/jquery.dataTables.min.js"></script>
+    <script src="asst/datatable/dataTables.bootstrap5.min.js"></script>
+    <script src="asst/datatable/dataTables.responsive.min.js"></script>
+    <script src="asst/datatable/responsive.bootstrap5.min.js"></script>
+    <script src="asst/datatable/datatables.checkboxes.min.js"></script>
+    <script src="asst/datatable/datatables.buttons.min.js"></script>
+    <script src="asst/datatable/dataTables.rowGroup.min.js"></script>
+    <script src="asst/plugin/flatpickr/flatpickr.js"></script>
+    <script src="asst/js/script.js"></script>
+    <script>
+        $(".date").flatpickr();
+        $(".time").flatpickr({
+            enableTime: true,
+            noCalendar: true,
+            dateFormat: "H:i",
+        });
+
+
+        $(window).on('load', function() {
+            if (feather) {
+                feather.replace({
+                    width: 14,
+                    height: 14
+                });
+            }
+        })
+    </script>
+</body>
+
+</html>

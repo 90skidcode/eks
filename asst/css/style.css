@@ -1,0 +1,129 @@
+* {
+    font-size: 14px;
+}
+
+html body,
+html {
+    height: 100%;
+    background-color: #ffe3a94f;
+    direction: ltr
+}
+
+.bg-white-50 {
+    background: rgba(255, 255, 255, .8);
+}
+
+ul.nav.navbar-nav.bookmark-icons img {
+    border-radius: 5px;
+}
+
+button span,
+th {
+    font-size: 12px !important;
+}
+
+div.dataTables_wrapper div.dataTables_length select,
+.dataTables_filter input {
+    width: auto;
+    display: inline-block;
+    margin: 0 5px;
+}
+
+div#DataTables_Table_0_filter {
+    float: right;
+    padding: 5px 0px;
+}
+
+ul.pagination {
+    margin: 5px 0;
+    float: right;
+}
+
+div#DataTables_Table_0_info {
+    padding: 10px 0;
+}
+
+li.nav-item.dropdown.dropdown-language {
+    background: #c30c1f;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+
+/* Scroll */
+
+::-webkit-scrollbar:hover {
+    background: #d7b36959;
+    border-radius: 4px;
+    height: 8px;
+    width: 15px;
+}
+
+::-webkit-scrollbar {
+    background: #d7b36959;
+    border-radius: 4px;
+    height: 8px;
+    width: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #c30c1f;
+    border-radius: 4px;
+}
+
+.avatar {
+    white-space: nowrap;
+    background-color: #C3C3C3;
+    border-radius: 50%;
+    position: relative;
+    cursor: pointer;
+    color: #FFF;
+    display: -webkit-inline-box;
+    display: -webkit-inline-flex;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    font-size: 1rem;
+    text-align: center;
+    vertical-align: middle;
+    font-weight: 600;
+}
+
+.avatar .avatar-content {
+    width: 32px;
+    height: 32px;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    border-radius: 50%;
+    font-size: .857rem;
+}
+
+#dashboard-ecommerce .card-header {
+    border-bottom: 0 solid rgba(34, 41, 47, .125);
+    background: #fdd785;
+}
+
+#dashboard-ecommerce .table:not(.table-dark):not(.table-light) tfoot:not(.table-dark) th,
+#dashboard-ecommerce .table:not(.table-dark):not(.table-light) thead:not(.table-dark) th {
+    background-color: #fdd785;
+}
+
+
+/* Config */
+
+.col-xl-4.col-md-4.col-12 {
+    display: none;
+}
+
+#dashboard-ecommerce .table {
+    display: block;
+}

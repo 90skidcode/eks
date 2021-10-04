@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html class="loading" lang="en" data-textdirection="ltr">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0,minimal-ui">
+    <title>EKS Definition</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500;1,600" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="asst/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="asst/css/bootstrap-extended.min.css">
+    <link rel="stylesheet" type="text/css" href="asst/css/style.css">
+</head>
+
+<body class="vertical-layout">
+    <div class="app-content content">
+        <div class="content-overlay"></div>
+        <div class="header-navbar-shadow"></div>
+        <div class="content-wrapper">
+            <div class="content-body">
+                <div class="auth-wrapper auth-cover" id="vanta">
+                    <div class="auth-inner row m-0">
+                        <a class="brand-logo">
+
+                        </a>
+                        <div class="d-none d-lg-flex col-lg-9 align-items-center p-5  vh-100">
+                            <div class="w-100 d-lg-flex align-items-center justify-content-center px-5">
+                                <div class="text-center">
+                                    <img src="asst/img/logo.png" class="w-50">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex col-lg-3 align-items-center auth-bg  bg-white-50">
+                            <div class="col-12 col-sm-8 col-md-6 col-lg-12 px-xl-2 mx-auto">
+                                <div class="text-center">
+                                    <img src="asst/img/logo.png" class="w-50">
+                                </div>
+
+                                <form class="auth-form mt-2" method="POST">
+                                    <div class="mb-1">
+                                        <label class="form-label" for="username">Username</label>
+                                        <input class="form-control" id="username" type="text" name="username" autocomplete="off" tabindex="1" placeholder="1000120" autofocus="" tabindex="1" />
+                                    </div>
+                                    <div class="mb-1">
+                                        <label class="form-label" for="password">Password</label>
+                                        <div class="input-group input-group-merge form-password-toggle">
+                                            <input class="form-control form-control-merge" id="password" tabindex="2" type="password" name="password" placeholder="············" /><span class="input-group-text cursor-pointer"><i data-feather="eye"></i></span>
+                                        </div>
+                                    </div>
+                                    <a href="dashboard.html" class="btn btn-primary w-100" tabindex="3">Login</a>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="asst/plugin/vanta/three.r119.min.js"></script>
+    <script src="asst/plugin/vanta/vanta.halo.min.js"></script>
+    <script>
+        VANTA.WAVES({
+            el: "#vanta",
+            mouseControls: true,
+            touchControls: true,
+            gyroControls: false,
+            minHeight: 200.00,
+            minWidth: 200.00,
+            scale: 1.00,
+            scaleMobile: 1.00,
+            color: 0x884800
+
+        })
+    </script>
+</body>
+
+</html>
