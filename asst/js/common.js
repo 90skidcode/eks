@@ -583,7 +583,6 @@ function dropdownValues(table_name, r) {
 
 
 function domdropdownValues(params, className) {
-    console.log(params);
     let html = '';
     $.each(params, function(i, v) {
         html += `<option value='${v.values}'>${v.values}</option>`;
