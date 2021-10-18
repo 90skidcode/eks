@@ -105,7 +105,6 @@ $(document).on('click', '.btn-save', function() {
     let c = $(this).closest('.card').find('form').attr('class');
     let t = $(this).closest('.card').find('form').attr('data-table');
     let v = $("." + c).repeaterVal();
-    console.log(v);
     $.each(v[t], function(i, val) {
         let tempdata = {
             "query": "add",
