@@ -51,7 +51,7 @@ function menulist(params) {
                                 <h4 class="card-title">${capitalizeFirstLetter((v.master_form_name))}</h4>
                             </div>
                             <div class="card-body">
-                                <form class="${v.master_table_name}-repeater">
+                                <form class="${v.master_table_name}-repeater"  data-table="${v.master_table_name}">
                                     <div data-repeater-list="${v.master_table_name}">
                                         <div data-repeater-item>
                                             <div class="row d-flex align-items-end">`;
@@ -76,7 +76,7 @@ function menulist(params) {
                                     <i data-feather="plus" class="me-25"></i>
                                     <span>Add New</span>
                                 </button>
-                                <button class="btn btn-icon btn-primary" type="button">
+                                <button class="btn btn-icon btn-primary btn-save" type="button">
                                     <i data-feather="save" class="me-25"></i>
                                     <span>Save</span>
                                 </button>
@@ -98,5 +98,24 @@ function menulist(params) {
         dateFormat: "H:i",
     });
     $('form').repeater();
-    $('select').select2();
+}
+
+
+$(document).on('click', '.btn-save', function() {
+    let c = $(this).closest('.card').find('form').attr('class');
+    let t = $(this).closest('.card').find('form').attr('data-table');
+    let v = $("." + c).repeaterVal();
+    console.log(v);
+    $.each(v[t], function(i, val) {
+        let tempdata = {
+            "query": "add",
+            "key": t,
+            "values": val
+        }
+        commonAjax('database.php', 'POST', tempdata, '', '', '', { "functionName": "success" });
+    });
+});
+
+function success(params) {
+    console.log(params);
 }
