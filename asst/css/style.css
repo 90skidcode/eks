@@ -125,5 +125,10 @@ li.nav-item.dropdown.dropdown-language {
 }
 
 #dashboard-ecommerce .table {
-    display: block;
+    display: table;
+}
+
+a.dropdown-item,
+.user-status {
+    text-transform: capitalize;
 }
