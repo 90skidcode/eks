@@ -6,7 +6,7 @@ let html = `<nav class="header-navbar navbar navbar-expand-lg align-items-center
         </ul>
     </div>
     <ul class="nav navbar-nav align-items-center ms-auto">
-        <li class="nav-item d-none d-lg-block"><a href="dashboard.html" class="nav-link nav-link-style"><i class="ficon"
+        <li class="nav-item d-none d-lg-block"><a href="../../pages/dashboard/dashboard.html" class="nav-link nav-link-style"><i class="ficon"
             data-feather="home"></i></a></li>
         <li class="nav-item d-none d-lg-block"><a href="../../pages/add/add.html" class="nav-link nav-link-style"><i class="ficon"
             data-feather="plus"></i></a></li>
@@ -63,7 +63,7 @@ function menuDom(params) {
     });
 
     params.result.forms.forEach(e => {
-        menu += `<a  href='../table/table.html?id=${e.master_table_id}' class="dropdown-item">${e.master_table_name}</a>`;
+        menu += `<a  href='../table/table.html?id=${e.master_table_id}' class="dropdown-item">${e.master_form_name}</a>`;
     });
 
     $('.company-list').html(company);

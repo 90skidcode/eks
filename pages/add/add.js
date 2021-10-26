@@ -72,7 +72,7 @@ function menulist(params) {
                     </div>
                         <div class="row">
                             <div class="col-12">
-                                <button class="btn btn-icon btn-primary" type="button" data-repeater-create>
+                                <button class="btn btn-icon btn-primary repeat" type="button" data-repeater-create>
                                     <i data-feather="plus" class="me-25"></i>
                                     <span>Add New</span>
                                 </button>
@@ -101,6 +101,17 @@ function menulist(params) {
 }
 
 
+$(document).on('click', '.repeat', function() {
+    setTimeout(() => {
+        $(".date").flatpickr();
+        $(".time").flatpickr({
+            enableTime: true,
+            noCalendar: true,
+            dateFormat: "H:i",
+        });
+    }, 100);
+});
+let success = true;
 $(document).on('click', '.btn-save', function() {
     let c = $(this).closest('.card').find('form').attr('class');
     let t = $(this).closest('.card').find('form').attr('data-table');
@@ -111,10 +122,12 @@ $(document).on('click', '.btn-save', function() {
             "key": t,
             "values": val
         }
-        commonAjax('database.php', 'POST', tempdata, '', '', '', { "functionName": "success" });
+        commonAjax('database.php', 'POST', tempdata, '', '', '', { "functionName": "successCount" });
     });
+    (success) ? showToast('Add Successfully', 'success'): showToast('Please try again!!', 'error');
 });
 
-function success(params) {
-    console.log(params);
+function successCount(params) {
+    if (params.status_code != 200)
+        success = false;
 }

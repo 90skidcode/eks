@@ -557,8 +557,8 @@ function domGenerator(j) {
                     <textarea type="text" name="${j.name}" class="form-control ${j.name}" id="${j.name}" placeholder="" required="${(j.required)  ? true :  false}" /></textarea>`;
         case 'select':
             return `<label class="form-label" for="${j.name}">${j.label}</label>
-                    <input list="${r}" class="form-select">
-                    <datalist class=" ${j.name} ${r}" name="${j.name}" id="${r}">
+                    <input list="${r}" class="form-select" name="${j.name}">
+                    <datalist class=" ${j.name} ${r}" id="${r}">
                     ${dropdownValues(j.name,r)}
                     </datalist>`;
         default:
@@ -585,7 +585,7 @@ function dropdownValues(table_name, r) {
 function domdropdownValues(params, className) {
     let html = '';
     $.each(params, function(i, v) {
-        html += `<option value='${v.values}'>${v.values}</option>`;
+        html += `<option value='${v.value}'>${v.value}</option>`;
     });
     $("." + className).html(html);
 }
