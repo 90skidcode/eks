@@ -132,3 +132,21 @@ a.dropdown-item,
 .user-status {
     text-transform: capitalize;
 }
+
+td.dataTables_empty {
+    text-align: center;
+    background: #fcf5f5;
+}
+
+div#base-table_filter {
+    text-align: right;
+    margin-top: 5 px;
+}
+
+thead {
+    background: #f2f2f2;
+}
+
+.d-flex.justify-content-between.align-items-center.mx-0.row {
+    padding: 5px;
+}

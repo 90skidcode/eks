@@ -1,3 +1,4 @@
+let dataTableName = '';
 $(document).ready(function() {
     if (getParameter('id')) {
         let tempdata = {
@@ -26,6 +27,7 @@ function gettableDetails(params) {
 }
 
 function tableDom(params, tableName) {
+    dataTableName = tableName;
     let name = params.message.split(',');
     var tableHeader = [];
     let html = '<tr>';
@@ -63,7 +65,7 @@ function tableDom(params, tableName) {
         },
         "like": ""
     }
-    commonAjax('database.php', 'POST', tempdata, '', '', '', { "functionName": "tableDomGenerator", "param1": tableHeader });
+    commonAjax('database.php', 'POST', tempdata, '', '', '', { "functionName": "tableDomGenerator", "param1": tableHeader }, { "functionName": "tableDomGenerator", "param1": tableHeader });
 
 }
 
@@ -83,5 +85,11 @@ function tableDomGenerator(params, tableheader) {
         buttons: [{ extend: "collection", className: "btn btn-outline-secondary dropdown-toggle me-2", text: feather.icons.clipboard.toSvg({ class: "font-small-4 me-50" }) + "PDF" }, { text: feather.icons.plus.toSvg({ class: "me-50 font-small-4" }) + "Add New Record", className: "create-new btn btn-primary", attr: { "data-bs-toggle": "modal", "data-bs-target": "#modals-slide-in" }, init: function(e, t, a) { $(t).removeClass("btn-secondary") } }],
         language: { paginate: { previous: "&nbsp;", next: "&nbsp;" } }
     });
-    $("div.head-label").html('<h6 class="mb-0">Attendance</h6>')
+    $("div.head-label").html(`<h6 class="mb-0">${tablenameConvertor(dataTableName)}</h6>`)
+}
+
+function tablenameConvertor(params) {
+    let n = params.replace("eks_", "");
+    n = n.replace(/_/gi, ' ');
+    return capitalizeFirstLetter(n);
 }

@@ -98,6 +98,7 @@ function menulist(params) {
         dateFormat: "H:i",
     });
     $('form').repeater();
+
 }
 
 

@@ -555,6 +555,10 @@ function domGenerator(j) {
         case 'textarea':
             return `<label class="form-label" for="${j.name}">${j.label}</label>
                     <textarea type="text" name="${j.name}" class="form-control ${j.name}" id="${j.name}" placeholder="" required="${(j.required)  ? true :  false}" /></textarea>`;
+        case 'radio-group':
+            return `<label class="form-label" for="${j.name}">${j.label}</label><br>
+                    ${radioButtonDom(j)}`;
+
         case 'select':
             return `<label class="form-label" for="${j.name}">${j.label}</label>
                     <input list="${r}" class="form-select" name="${j.name}">
@@ -588,4 +592,14 @@ function domdropdownValues(params, className) {
         html += `<option value='${v.value}'>${v.value}</option>`;
     });
     $("." + className).html(html);
+}
+
+function radioButtonDom(params) {
+    let h = '';
+    params.values.forEach(e => {
+        console.log(e);
+        h += `  <input type="radio"  name="${params.name}" value="${e.label}">
+                <label for="html">${e.label}</label><br>`
+    });
+    return h;
 }
