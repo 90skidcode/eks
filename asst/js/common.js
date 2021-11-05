@@ -560,15 +560,21 @@ function domGenerator(j) {
                     ${radioButtonDom(j)}`;
 
         case 'select':
-            return `<label class="form-label" for="${j.name}">${j.label}</label>
-                    <input list="${r}" class="form-select" name="${j.name}">
-                    <datalist class=" ${j.name} ${r}" id="${r}">
+            return `<label class="form-label" for="${j.name}">${j.label}</label>                    
+                    <select class="form-control ${j.name} ${r}" id="${r}" name="${j.name}">
                     ${dropdownValues(j.name,r)}
-                    </datalist>`;
+                    </select>`;
         default:
             return ``;
     }
 }
+/** <input list="${r}" class="form-select" name="${j.name}"> */
+
+/**
+ * 
+ * @param {*} table_name 
+ * @param {*} r 
+ */
 
 function dropdownValues(table_name, r) {
     let tempdata = {
