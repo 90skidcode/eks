@@ -54,17 +54,19 @@ let html = `<nav class="header-navbar navbar navbar-expand-lg align-items-center
 </div>
 </nav>
 `;
+let user = '';
 
-$('body').prepend(html);
-let user = JSON.parse(localStorage.getItem('user'));
+$(document).ready(function() {
+    $('body').prepend(html);
+    let user = JSON.parse(localStorage.getItem('user'));
 
-let data = {
-    "list_key": "getUserDashboard",
-    "company_id": user[0].company_id,
-    "user_id": user[0].user_id,
-}
-
-commonAjax('services.php', 'POST', data, '', '', '', { "functionName": "menuDom" });
+    let data = {
+        "list_key": "getUserDashboard",
+        "company_id": user[0].company_id,
+        "user_id": user[0].user_id,
+    }
+    commonAjax('services.php', 'POST', data, '', '', '', { "functionName": "menuDom" });
+});
 
 function menuDom(params) {
     let menu = '';
@@ -84,19 +86,16 @@ function menuDom(params) {
     $('.user-name').html(params.result.user[0].user_id);
     $('.user-status').html(params.result.user[0].user_name);
     $('.selected-company-name').html(params.result.company[0].company_master);
-    let data = {
-        "query": "master",
+
+    if (localStorage.getItem('company-id')) {
+        c = localStorage.getItem('company-id');
+        $('.company[data-id="' + c + '"]').trigger('click');
     }
-    commonAjax('database.php', 'POST', data, '', '', '', { "functionName": "settingDom" });
 }
-
-function settingDom(params) {
-    let setting = '';
-}
-
 
 $(document).on('click', '.company', function() {
     let c = $(this).attr('data-id');
+    localStorage.setItem('company-id', c);
     $('.selected-language').html($(this).text());
     $('.selected-company-name').html($(this).text());
     let tempdata = {
@@ -112,7 +111,6 @@ $(document).on('click', '.company', function() {
     }
     commonAjax('database.php', 'POST', tempdata, '', '', '', { "functionName": "listform" });
 });
-
 
 function listform(params) {
     let menu = '';

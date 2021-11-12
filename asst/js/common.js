@@ -580,6 +580,8 @@ function domGenerator(j) {
  */
 
 function dropdownValues(table_name, r) {
+    let c = '';
+    (localStorage.getItem('company-id')) ? c = localStorage.getItem('company-id'): c = user[0].company_id;
     let tempdata = {
         "query": "fetch",
         "key": "ma_" + table_name + "_master",
@@ -587,7 +589,7 @@ function dropdownValues(table_name, r) {
             "*": "*"
         },
         "condition": {
-            'company_id': user[0].company_id
+            'company_id': c
         },
         "like": ""
     }

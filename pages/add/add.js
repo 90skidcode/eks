@@ -23,6 +23,8 @@ $(document).on('click', '.content-body .nav .nav-item .nav-link', function() {
 })
 
 $(document).ready(function() {
+    let c = '';
+    (localStorage.getItem('company-id')) ? c = localStorage.getItem('company-id'): c = user[0].company_id;
     let tempdata = {
         "query": "fetch",
         "key": "master_table",
@@ -30,7 +32,7 @@ $(document).ready(function() {
             "*": "*"
         },
         "condition": {
-            'company_id': user[0].company_id
+            'company_id': c
         },
         "like": ""
     }
