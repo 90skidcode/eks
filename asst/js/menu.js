@@ -28,7 +28,6 @@ let html = `<nav class="header-navbar navbar navbar-expand-lg align-items-center
              
             </div>
         </li>
-       
             <li class="nav-item d-none d-lg-block"><a href="../../pages/setting/setting.html" class="nav-link nav-link-style"><i class="ficon"
             data-feather=""></i></a></li>
         <li class="nav-item dropdown dropdown-language">
@@ -47,7 +46,7 @@ let html = `<nav class="header-navbar navbar navbar-expand-lg align-items-center
                 class="avatar-status-online"></span></span>
             </a>
             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-user">
-                <a class="dropdown-item" href="index.html"><i class="me-50"
+                <a class="dropdown-item" href="../../index.html"><i class="me-50"
                         data-feather="power"></i> Logout</a>
             </div>
         </li>
@@ -72,7 +71,7 @@ function menuDom(params) {
     let company = '';
 
     params.result.company.forEach(e => {
-        company += `<a  class="dropdown-item">${e.company_master}</a>`;
+        company += `<a  data-id="${e.company_master_id}" class="dropdown-item company">${e.company_master}</a>`;
     });
 
     params.result.forms.forEach(e => {
@@ -84,7 +83,7 @@ function menuDom(params) {
     $('.selected-language').html(params.result.company[0].company_master);
     $('.user-name').html(params.result.user[0].user_id);
     $('.user-status').html(params.result.user[0].user_name);
-
+    $('.selected-company-name').html(params.result.company[0].company_master);
     let data = {
         "query": "master",
     }
@@ -93,4 +92,35 @@ function menuDom(params) {
 
 function settingDom(params) {
     let setting = '';
+}
+
+
+$(document).on('click', '.company', function() {
+    let c = $(this).attr('data-id');
+    $('.selected-language').html($(this).text());
+    $('.selected-company-name').html($(this).text());
+    let tempdata = {
+        "query": "fetch",
+        "key": "master_table",
+        "column": {
+            "*": "*"
+        },
+        "condition": {
+            'company_id': $(this).attr('data-id')
+        },
+        "like": ""
+    }
+    commonAjax('database.php', 'POST', tempdata, '', '', '', { "functionName": "listform" });
+});
+
+
+function listform(params) {
+    console.log(params)
+
+    let menu = '';
+
+    params.forEach(e => {
+        menu += `<a  data-id="${e.master_table_id}" class="dropdown-item company">${e.master_form_name}</a>`;
+    });
+    $('.company-menu').html(menu);
 }

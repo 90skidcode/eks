@@ -60,7 +60,7 @@ function menulist(params) {
             domItem += `<div class="col-md-2 col-12">${domGenerator(val)}</div>`;
         });
 
-        domItem += `<div class="col-md-2 col-12 mb-50">
+        domItem += `<div class="col-md-12 col-12 mb-50 mt-50">
                         <button class="btn btn-outline-danger text-nowrap px-1" data-repeater-delete type="button">
                             <i data-feather="x" class="me-25"></i>
                             <span>Delete</span>
@@ -97,22 +97,50 @@ function menulist(params) {
         noCalendar: true,
         dateFormat: "H:i",
     });
-    $('form').repeater();
+    $('.select2').select2();
+    $('.select2').trigger('change');
+    $('form').repeater({
+
+        // (Optional)
+        // "show" is called just after an item is added.  The item is hidden
+        // at this point.  If a show callback is not given the item will
+        // have $(this).show() called on it.
+        show: function() {
+            $(this).slideDown();
+            $(".date").flatpickr();
+            $(".time").flatpickr({
+                enableTime: true,
+                noCalendar: true,
+                dateFormat: "H:i",
+            });
+            $(this).closest('form').find('.select2').each(function() {
+                if ($(this).html().trim() == 'undefined') {
+                    let t = $(this).closest('div');
+                    let c = $(this).attr('data-id');
+                    let n = $(this).attr('name');
+                    t.find('.select2').remove();
+                    t.append(`<select class="form-control select2 ${n} ${c}"  data-id="${c}" name="${n}"> ${selectJson[c]} </select>`);
+                    $('.select2').select2();
+                }
+            })
+        },
+        // (Optional)
+        // "hide" is called when a user clicks on a data-repeater-delete
+        // element.  The item is still visible.  "hide" is passed a function
+        // as its first argument which will properly remove the item.
+        // "hide" allows for a confirmation step, to send a delete request
+        // to the server, etc.  If a hide callback is not given the item
+        // will be deleted.
+        hide: function(deleteElement) {
+            if (confirm('Are you sure you want to delete this row ?')) {
+                $(this).slideUp(deleteElement);
+            }
+        },
+        isFirstItemUndeletable: true
+    })
 
 }
 
-
-$(document).on('click', '.repeat', function() {
-    setTimeout(() => {
-        $(".date").flatpickr();
-        $(".time").flatpickr({
-            enableTime: true,
-            noCalendar: true,
-            dateFormat: "H:i",
-        });
-    }, 100);
-});
-let success = true;
 $(document).on('click', '.btn-save', function() {
     let c = $(this).closest('.card').find('form').attr('class');
     let t = $(this).closest('.card').find('form').attr('data-table');
@@ -125,10 +153,8 @@ $(document).on('click', '.btn-save', function() {
         }
         commonAjax('database.php', 'POST', tempdata, '', '', '', { "functionName": "successCount" });
     });
-    (success) ? showToast('Add Successfully', 'success'): showToast('Please try again!!', 'error');
 });
 
 function successCount(params) {
-    if (params.status_code != 200)
-        success = false;
+    (params.status_code == 200) ? showToast('Add Successfully', 'success'): showToast('Please try again!!', 'error');
 }

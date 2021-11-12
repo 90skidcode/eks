@@ -40,7 +40,10 @@ function tableDom(params, tableName) {
     let d = ['status', 'created_by', 'created_at', 'updated_at'];
 
     $.each(name, function(i, v) {
-        if (!id) id = v;
+        if (!id) {
+            id = v;
+            v = 'S.No';
+        }
         if (v) {
             if (d.indexOf(v) == -1) {
                 tableHeader.push({
@@ -55,10 +58,10 @@ function tableDom(params, tableName) {
         mRender: function(data, type, row) {
             return `<td>
                         <a data-bs-toggle="modal" data-bs-target="#modals-slide-in" title='Edit' data-id="${eval(row[id])}" class="btn btn-edit btn-icon btn-hover btn-sm btn-rounded pull-right">
-                       <i class="ficon" data-feather="settings"></i>
+                            &#9998;
                         </a>
                         <a data-bs-toggle="modal" data-bs-target="#modals-slide-in" title='Edit' data-id="${eval(row[id])}" class="btn btn-edit btn-icon btn-hover btn-sm btn-rounded pull-right">
-                        &#9998;
+                            &#9998;
                         </a>
                     </td>`;
         }

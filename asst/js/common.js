@@ -9,14 +9,14 @@ $('body').prepend(`<div class="loader-area">
  * Title
  */
 
-$('title').html('the Coder Space');
+$('title').html('EKS');
 
 /**
  * Input Auto Complete Off
  */
 
 $('input').attr('autocomplete', 'no-fill');
-
+$('.content-body').prepend(`<div class="notification-toast top-right" id="notification-toast"></div>`);
 /**
  * Select 2
 
@@ -61,24 +61,7 @@ function formatDate(date) {
 }
 
 
-/**
- * To Serlize object
- */
-$.fn.serializeObject = function() {
-    var o = {};
-    var a = this.serializeArray();
-    $.each(a, function() {
-        if (o[this.name]) {
-            if (!o[this.name].push) {
-                o[this.name] = [o[this.name]];
-            }
-            o[this.name].push(this.value || '');
-        } else {
-            o[this.name] = this.value || '';
-        }
-    });
-    return o;
-};
+
 
 
 /**
@@ -205,7 +188,7 @@ function showToast(msg, type) {
     $('#notification-toast .toast').toast('show');
     setTimeout(function() {
         $('#notification-toast .toast:first-child').remove();
-    }, 5000);
+    }, 50000);
 }
 
 
@@ -376,9 +359,15 @@ function locationReload() {
  */
 
 function setValue(name, value) {
-    $('[name="' + name + '"]').val(value);
-    if ($('[name="' + name + '"]').hasClass('select2'))
-        $('[name="' + name + '"]').trigger('change');
+    if ($('[name="' + name + '"]').prop("tagName") == 'INPUT') {
+        if ($('[name="' + name + '"]').attr('type') == 'radio') {
+            $('[name="' + name + '"][value="' + value + '"]').prop('checked', true);
+        } else $('[name="' + name + '"]').val(value);
+    } else {
+        $('[name="' + name + '"]').val(value);
+        if ($('[name="' + name + '"]').hasClass('select2'))
+            $('[name="' + name + '"]').trigger('change');
+    }
 }
 
 
@@ -420,7 +409,8 @@ function multipleSetValue(responce, imageFlag) {
             setValue(i, v)
         })
     }
-    docShow(imageFlag)
+    docShow(imageFlag);
+    $('.select2').trigger('change')
 }
 
 /**
@@ -545,30 +535,35 @@ function domGenerator(j) {
     switch (j.type) {
         case 'text':
             return `<label class="form-label" for="${j.name}">${j.label}</label>
-                    <input type="text" name="${j.name}" class="form-control ${j.name}" id="${j.name}" placeholder="" required="${(j.required)  ? true :  false}" /> `;
+                    <input type="text" name="${j.name}" class="form-control ${j.name}" id="${j.name}" placeholder=""  /> `;
         case 'date':
             return `<label class="form-label " for="${j.name}">${j.label}</label>
                     <input type="text" name="${j.name}" id="${j.name}" class="form-control post date" placeholder="MM/DD/YYYY" aria-label="MM/DD/YYYY" />`
         case 'autocomplete':
             return `<label class="form-label" for="${j.name}">${j.label}</label>
-                    <input type="text" name="${j.name}" class="form-control time ${j.name}" id="${j.name}"placeholder="00:00" aria-label="00:00" required="${(j.required)  ? true :  false}" /> `;
+                    <input type="text" name="${j.name}" class="form-control time ${j.name}" id="${j.name}"placeholder="00:00" aria-label="00:00"  /> `;
         case 'textarea':
-            return `<label class="form-label" for="${j.name}">${j.label}</label>
-                    <textarea type="text" name="${j.name}" class="form-control ${j.name}" id="${j.name}" placeholder="" required="${(j.required)  ? true :  false}" /></textarea>`;
+            return `<label class="form-label" for="${j.name}">${j.label}</label>                    
+                    <select class="form-control select2 ${j.name} ${r}" data-id="${r}" name="${j.name}">
+                    ${dropdownValues(j.name, r)}
+                    </select>`;
+            /* return `<label class="form-label" for="${j.name}">${j.label}</label>
+                     <textarea type="text" name="${j.name}" class="form-control ${j.name}" id="${j.name}" placeholder=""  /></textarea>`;*/
         case 'radio-group':
             return `<label class="form-label" for="${j.name}">${j.label}</label><br>
                     ${radioButtonDom(j)}`;
-
         case 'select':
             return `<label class="form-label" for="${j.name}">${j.label}</label>                    
-                    <select class="form-control ${j.name} ${r}" id="${r}" name="${j.name}">
-                    ${dropdownValues(j.name,r)}
+                    <select class="form-control select2 ${j.name} ${r}" data-id="${r}" name="${j.name}">
+                    ${dropdownValues(j.name, r)}
                     </select>`;
         default:
             return ``;
     }
 }
-/** <input list="${r}" class="form-select" name="${j.name}"> */
+/** <input list="${r}" class="form-select" name="${j.name}"> 
+ * required="${(j.required)  ? true :  false}"
+ */
 
 /**
  * 
@@ -588,22 +583,23 @@ function dropdownValues(table_name, r) {
         },
         "like": ""
     }
-    commonAjax('database.php', 'POST', tempdata, '', '', '', { "functionName": "domdropdownValues", "param1": r });
+    commonAjax('database.php', 'POST', tempdata, '', '', '', { "functionName": "domdropdownValues", "param1": r, "param2": table_name });
 }
 
+var selectJson = [];
 
-function domdropdownValues(params, className) {
+function domdropdownValues(params, className, table_name) {
     let html = '';
     $.each(params, function(i, v) {
-        html += `<option value='${v.value}'>${v.value}</option>`;
+        html += `<option value='${eval('v.ma_' + table_name + '_master_id')}'>${v.value}</option>`;
     });
     $("." + className).html(html);
+    selectJson[className] = html;
 }
 
 function radioButtonDom(params) {
     let h = '';
     params.values.forEach(e => {
-        console.log(e);
         h += `  <input type="radio"  name="${params.name}" value="${e.label}">
                 <label for="html">${e.label}</label><br>`
     });

@@ -150,3 +150,144 @@ thead {
 .d-flex.justify-content-between.align-items-center.mx-0.row {
     padding: 5px;
 }
+
+.select2-container {
+    width: 100% !important;
+    z-index: 99999;
+}
+
+.toast {
+    border: 1px solid #edf2f9;
+    background-color: #fff;
+    max-width: 350px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15)
+}
+
+.toast .close {
+    margin-bottom: 0px
+}
+
+.notification-toast {
+    position: fixed;
+    max-width: 350px;
+    z-index: 1060
+}
+
+.notification-toast.top-right {
+    top: calc(70px + 15px);
+    right: 15px
+}
+
+.notification-toast.top-left {
+    top: calc(70px + 15px);
+    left: 15px
+}
+
+.notification-toast.top-middle {
+    top: calc(70px + 15px);
+    left: 50%;
+    transform: translateX(-50%);
+    -webkit-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    -o-transform: translateX(-50%);
+    -ms-transform: translateX(-50%)
+}
+
+.notification-toast.bottom-right {
+    bottom: 15px;
+    right: 15px
+}
+
+.notification-toast.bottom-left {
+    bottom: 15px;
+    left: 15px
+}
+
+.notification-toast.bottom-middle {
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    -webkit-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    -o-transform: translateX(-50%);
+    -ms-transform: translateX(-50%)
+}
+
+.toast {
+    max-width: 350px;
+    overflow: hidden;
+    font-size: 0.875rem;
+    background-color: rgba(255, 255, 255, 0.85);
+    background-clip: padding-box;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.1);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    opacity: 0;
+    border-radius: 0.25rem
+}
+
+.toast:not(:last-child) {
+    margin-bottom: 0.75rem
+}
+
+.toast.showing {
+    opacity: 1
+}
+
+.toast.show {
+    display: block;
+    opacity: 1
+}
+
+.toast.hide {
+    display: none
+}
+
+.toast-header {
+    display: flex;
+    align-items: center;
+    padding: 0.25rem 0.75rem;
+    color: #6c757d;
+    background-color: rgba(255, 255, 255, 0.85);
+    background-clip: padding-box;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05)
+}
+
+.toast-body {
+    padding: 0.75rem
+}
+
+.close {
+    float: right;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1;
+    color: #000;
+    text-shadow: 0 1px 0 #fff;
+    opacity: .5;
+    margin: -5px;
+}
+
+.close:hover {
+    color: #000;
+    text-decoration: none
+}
+
+.close:not(:disabled):not(.disabled):hover,
+.close:not(:disabled):not(.disabled):focus {
+    opacity: .75
+}
+
+button.close {
+    padding: 0;
+    background-color: transparent;
+    border: 0;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none
+}
+
+a.close.disabled {
+    pointer-events: none
+}
