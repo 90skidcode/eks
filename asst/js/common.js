@@ -16,7 +16,15 @@ $('title').html('EKS');
  */
 
 $('input').attr('autocomplete', 'no-fill');
+
 $('.content-body').prepend(`<div class="notification-toast top-right" id="notification-toast"></div>`);
+
+/* Add Loader to body */
+$('body').prepend(`<div class="loader-area">
+    <div class="loader-overlay">
+        <div class="loader"></div>
+    </div>
+</div>`);
 /**
  * Select 2
 

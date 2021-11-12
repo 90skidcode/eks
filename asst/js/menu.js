@@ -115,12 +115,9 @@ $(document).on('click', '.company', function() {
 
 
 function listform(params) {
-    console.log(params)
-
     let menu = '';
-
     params.forEach(e => {
-        menu += `<a  data-id="${e.master_table_id}" class="dropdown-item company">${e.master_form_name}</a>`;
+        menu += `<a  href='../table/table.html?id=${e.master_table_id}' class="dropdown-item">${e.master_form_name}</a>`;
     });
     $('.company-menu').html(menu);
 }
