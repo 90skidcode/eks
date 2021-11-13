@@ -79,7 +79,7 @@ function gettableDetails(params) {
                     "data": v.name,
                     mRender: function(data, type, row) {
                         // console.log(dropdownValuesList[v.name].find(x => x['ma_' + v.name + '_master_id'] == data).value);
-                        if (data || typeof(data) != 'undefined')
+                        if (data && typeof(data) != 'undefined' && data != 'undefined')
                             return `${dropdownValuesList[v.name].find(x => x['ma_'+v.name+'_master_id'] == data).value }`;
                         else
                             return '';
