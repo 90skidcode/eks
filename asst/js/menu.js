@@ -76,12 +76,12 @@ function menuDom(params) {
         company += `<a  data-id="${e.company_master_id}" class="dropdown-item company">${e.company_master}</a>`;
     });
 
-    params.result.forms.forEach(e => {
+    /*params.result.forms.forEach(e => {
         menu += `<a  href='../table/table.html?id=${e.master_table_id}' class="dropdown-item">${e.master_form_name}</a>`;
-    });
+    });*/
 
     $('.company-list').html(company);
-    $('.company-menu').html(menu);
+    //$('.company-menu').html(menu);
     $('.selected-language').html(params.result.company[0].company_master);
     $('.user-name').html(params.result.user[0].user_id);
     $('.user-status').html(params.result.user[0].user_name);
@@ -90,7 +90,8 @@ function menuDom(params) {
     if (localStorage.getItem('company-id')) {
         c = localStorage.getItem('company-id');
         $('.company[data-id="' + c + '"]').trigger('click');
-    }
+    } else
+        $('.company-list .company').eq(0).trigger('click');
 }
 
 $(document).on('click', '.company', function() {

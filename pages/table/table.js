@@ -36,7 +36,6 @@ function gettableDetails(params) {
     <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>`;
 
     $(".single-dom").html(htmlDOM);
-    console.log(htmlDOM);
     $('.select2').select2();
     $(".date").flatpickr();
     $(".time").flatpickr({
@@ -52,30 +51,6 @@ function gettableDetails(params) {
         "data": id
     });
     html += `<td>S.NO</td>`;
-    $.each(JSON.parse(params[0].master_table_json), function(i, v) {
-        if (v.name) {
-            if (v.type == 'file') {
-                tableHeader.push({
-                    "data": v.name,
-                    mRender: function(data, type, row) {
-                        return `ff`;
-                    }
-                });
-            } else if (v.type == 'select') {
-                tableHeader.push({
-                    "data": v.name,
-                    mRender: function(data, type, row) {
-                        return `${dropdownValuesList[v.name].find(x => x['ma_'+v.name+'_master_id'] == data).value }`;
-                    }
-                });
-            } else {
-                tableHeader.push({
-                    "data": v.name
-                });
-            }
-            html += `<td>${v.label}</td>`;
-        }
-    });
     tableHeader.push({
         "data": 'status',
         mRender: function(data, type, row) {
@@ -89,7 +64,37 @@ function gettableDetails(params) {
                     </td>`;
         }
     });
-    html += '<td class="text-center">Action</td></tr>';
+    html += '<td class="text-center">Action</td>';
+    $.each(JSON.parse(params[0].master_table_json), function(i, v) {
+        if (v.name) {
+            if (v.type == 'file') {
+                tableHeader.push({
+                    "data": v.name,
+                    mRender: function(data, type, row) {
+                        return `ff`;
+                    }
+                });
+            } else if (v.type == 'select' || v.type == 'textarea') {
+                tableHeader.push({
+                    "data": v.name,
+                    mRender: function(data, type, row) {
+                        // console.log(dropdownValuesList[v.name].find(x => x['ma_' + v.name + '_master_id'] == data).value);
+                        if (data)
+                            return `${dropdownValuesList[v.name].find(x => x['ma_'+v.name+'_master_id'] == data).value }`;
+                        else
+                            return '';
+                    }
+                });
+            } else {
+                tableHeader.push({
+                    "data": v.name
+                });
+            }
+            html += `<td>${v.label}</td>`;
+        }
+    });
+
+    html += '</tr>';
     $(".datatables-basic thead").html(html);
     let tempdata = {
         "query": "fetch",
@@ -119,6 +124,7 @@ function tableDomGenerator(params, tableheader) {
         columns: tableheader,
         dom: '<"card-header border-bottom p-1"<"head-label"><"dt-action-buttons text-end"B>><"d-flex justify-content-between align-items-center mx-0 row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>t<"d-flex justify-content-between mx-0 row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
         data: params,
+        responsive: true,
         lengthMenu: [25, 50, 75, 100],
         buttons: [{ extend: "collection", className: "btn btn-outline-secondary dropdown-toggle me-2", text: feather.icons.clipboard.toSvg({ class: "font-small-4 me-50" }) + "PDF" }, { text: feather.icons.plus.toSvg({ class: "me-50 font-small-4" }) + "Add New Record", className: "create-new btn btn-primary", attr: { "data-bs-toggle": "modal", "data-bs-target": "#modals-slide-in" }, init: function(e, t, a) { $(t).removeClass("btn-secondary") } }],
         language: { paginate: { previous: "&nbsp;", next: "&nbsp;" } }

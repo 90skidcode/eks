@@ -1,10 +1,3 @@
-/* Add Loader to body */
-$('body').prepend(`<div class="loader-area">
-    <div class="loader-overlay">
-        <div class="loader"></div>
-    </div>
-</div>`);
-
 /**
  * Title
  */
@@ -259,7 +252,6 @@ var serverUrl = 'https://www.thecoderspace.com/codedev/eks/api/';
 
 function commonAjax(url, type, data, resetFormSelector, sMessage, eMessage, sCallBack, eCallBack) {
     loader(true);
-
     $.ajax({
         url: (isEmptyValue(url)) ? serverUrl + 'services.php' : serverUrl + url,
         type: type,
@@ -616,7 +608,6 @@ function dropdownValues(table_name, r) {
             }
         })
     }
-    // console.log(v);
     return v;
 }
 var selectJson = [];
@@ -627,7 +618,6 @@ function domdropdownValues(params, className, table_name) {
     $.each(params, function(i, v) {
         html += `<option value='${eval('v.ma_' + table_name + '_master_id')}'>${v.value}</option>`;
     });
-    //console.log(className, html);
     $("." + className).html(html);
     selectJson[className] = html;
     return html;

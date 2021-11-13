@@ -832,3 +832,7 @@ a.badge-dark.focus {
     left: -11px;
     top: -2px
 }
+
+.display-block {
+    display: block;
+}
