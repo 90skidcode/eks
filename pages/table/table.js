@@ -79,7 +79,7 @@ function gettableDetails(params) {
                     "data": v.name,
                     mRender: function(data, type, row) {
                         // console.log(dropdownValuesList[v.name].find(x => x['ma_' + v.name + '_master_id'] == data).value);
-                        if (data)
+                        if (data || typeof(data) != 'undefined')
                             return `${dropdownValuesList[v.name].find(x => x['ma_'+v.name+'_master_id'] == data).value }`;
                         else
                             return '';
@@ -155,6 +155,7 @@ $(document).on('click', '.btn-save', function() {
             "key": dataTableName,
             "values": $("#single-dom").serializeObject()
         }
+        tempdata["values"]['status'] = 1;
     } else {
         tempdata = {
             "query": 'update',

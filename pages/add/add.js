@@ -153,6 +153,7 @@ $(document).on('click', '.btn-save', function() {
             "key": t,
             "values": val
         }
+        tempdata["values"]['status'] = 1;
         commonAjax('database.php', 'POST', tempdata, '', '', '', { "functionName": "successCount" });
     });
 });
