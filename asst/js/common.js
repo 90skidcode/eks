@@ -179,7 +179,7 @@ function showToast(msg, type) {
     let icon = '';
     (type == 'error') ? background = 'badge-danger': background = 'badge-success';
     (type == 'success') ? icon = 'anticon-check-circle': icon = 'anticon-info-circle'
-    var toastHTML = `<div class="toast fade hide" data-delay="5000">
+    var toastHTML = `<div class="toast fade hide">
         <div class="toast-header ${background}">
             <i class="anticon ${icon} m-r-5 text-white"></i>
             <strong class="mr-auto">${type.toUpperCase()}</strong>
@@ -190,13 +190,13 @@ function showToast(msg, type) {
         <div class="toast-body">
             ${msg}
         </div>
-    </div>`
+    </div>`;
 
-    $('#notification-toast').append(toastHTML)
+    $('#notification-toast').append(toastHTML);
     $('#notification-toast .toast').toast('show');
     setTimeout(function() {
         $('#notification-toast .toast:first-child').remove();
-    }, 50000);
+    }, 115000);
 }
 
 
@@ -255,14 +255,16 @@ function checkRequired(selector) {
  * @param {JSON} sCallBack  *function* for function name, *param* for call back paramater
  * @param {JSON} eCallBack  *function* for function name, *param* for call back paramater
  */
+var serverUrl = 'https://www.thecoderspace.com/codedev/eks/api/';
 
 function commonAjax(url, type, data, resetFormSelector, sMessage, eMessage, sCallBack, eCallBack) {
     loader(true);
-    let serverUrl = 'https://www.thecoderspace.com/codedev/eks/api/';
+
     $.ajax({
         url: (isEmptyValue(url)) ? serverUrl + 'services.php' : serverUrl + url,
         type: type,
         data: data,
+        async: false,
         success: function(response) {
             loader(false);
             try {
@@ -544,6 +546,12 @@ function domGenerator(j) {
         case 'text':
             return `<label class="form-label" for="${j.name}">${j.label}</label>
                     <input type="text" name="${j.name}" class="form-control ${j.name}" id="${j.name}" placeholder=""  /> `;
+        case 'number':
+            return `<label class="form-label" for="${j.name}">${j.label}</label>
+                    <input type="number" name="${j.name}" class="form-control ${j.name}" id="${j.name}" placeholder=""  /> `;
+        case 'file':
+            return `<label class="form-label" for="${j.name}">${j.label}</label>
+                    <input type="file" name="${j.name}" class="form-control ${j.name}" id="${j.name}"  accept="image/*" placeholder=""  /> `;
         case 'date':
             return `<label class="form-label " for="${j.name}">${j.label}</label>
                     <input type="text" name="${j.name}" id="${j.name}" class="form-control post date" placeholder="MM/DD/YYYY" aria-label="MM/DD/YYYY" />`
@@ -578,6 +586,7 @@ function domGenerator(j) {
  * @param {*} table_name 
  * @param {*} r 
  */
+var dropdownValuesList = [];
 
 function dropdownValues(table_name, r) {
     let c = '';
@@ -593,18 +602,35 @@ function dropdownValues(table_name, r) {
         },
         "like": ""
     }
-    commonAjax('database.php', 'POST', tempdata, '', '', '', { "functionName": "domdropdownValues", "param1": r, "param2": table_name });
+    let v = '';
+    if (dropdownValuesList[table_name]) {
+        v = domdropdownValues(dropdownValuesList[table_name], r, table_name);
+    } else {
+        $.ajax({
+            url: serverUrl + 'database.php',
+            type: 'POST',
+            data: tempdata,
+            async: false,
+            success: function(response) {
+                v = domdropdownValues(JSON.parse(response), r, table_name);
+            }
+        })
+    }
+    // console.log(v);
+    return v;
 }
-
 var selectJson = [];
 
 function domdropdownValues(params, className, table_name) {
+    dropdownValuesList[table_name] = params;
     let html = '';
     $.each(params, function(i, v) {
         html += `<option value='${eval('v.ma_' + table_name + '_master_id')}'>${v.value}</option>`;
     });
+    //console.log(className, html);
     $("." + className).html(html);
     selectJson[className] = html;
+    return html;
 }
 
 function radioButtonDom(params) {
@@ -615,3 +641,92 @@ function radioButtonDom(params) {
     });
     return h;
 }
+
+
+
+
+/**
+ * File Upload
+ */
+var uploadData = '';
+$(document).ready(function() {
+    $(document).on('change', 'input[type="file"]', function() {
+        $(".btn-save").prop('disabled', true);
+        var formData = new FormData();
+        formData.append('file', $(this)[0].files[0]);
+        let randomClass = randomString(16, 'aA');
+        let html = ` <div class="col-md-3 ${randomClass}" data-val="">
+                         <span class="badge-danger float-right border-radius-round position-absolute pointer remove-img" title="remove">
+                             <span class="icon-holder d-none">
+                                 <i class="anticon anticon-close"></i>
+                             </span>
+                         </span>
+                         <img class="w-100" src="" alt="">
+                         <div class="progress">
+                             <div class="progress-bar progress-bar-animated bg-success" role="progressbar" style="width: 0%"></div>
+                         </div>
+                     </div>`;
+        $(".image-prev-area").append(html);
+        $(".image-prev-area").removeClass('d-none');
+        readURL(this, randomClass);
+        $.ajax({
+            xhr: function() {
+                var xhr = new window.XMLHttpRequest();
+                xhr.upload.addEventListener("progress", function(evt) {
+                    if (evt.lengthComputable) {
+                        var percentComplete = evt.loaded / evt.total;
+                        percentComplete = parseInt(percentComplete * 100);
+                        $("." + randomClass + " .progress-bar").css({
+                            width: percentComplete + "%"
+                        })
+                        if (percentComplete === 100) {
+
+                        }
+                    }
+                }, false);
+                return xhr;
+            },
+            url: serverUrl + 'upload.php',
+            type: 'POST',
+            data: formData,
+            success: function(data) {
+                $(".btn-save").prop('disabled', false);
+                let dataResult = JSON.parse(data);
+                $("#upload").val(null);
+                $("." + randomClass + " .icon-holder").removeClass('d-none');
+                if (dataResult.status_code == 200) {
+                    showToast(dataResult.message, 'success');
+                    uploadData.push(dataResult.result);
+                    $("." + randomClass).attr('data-val', dataResult.result);
+                } else {
+                    showToast(dataResult.message, 'error');
+                }
+                uploadData = uploadData.filter(function(e) { return e });
+                $('[name=customer_doc]').val(uploadData.toString());
+            },
+            error: function(data) {
+                $(".btn-save").prop('disabled', false);
+            },
+            cache: false,
+            contentType: false,
+            processData: false
+        });
+    });
+});
+
+$(document).on('click', '.image-prev-area .remove-img', function() {
+    var value = $(this).closest('div').attr('data-val');
+    uploadData = $('[name=customer_doc]').val().split(",");
+    if (value) {
+        uploadData = removeItemOnce(uploadData, value);
+        uploadData = uploadData.filter(function(e) { return e });
+        $('[name=customer_doc]').val(uploadData.toString());
+    }
+    $(this).closest('div').remove();
+    showToast("File removed successfully", 'success');
+})
+
+$(document).on('click', '.close', function() {
+    $(this).closest('.toast').toast('hide');
+    $(this).closest('.toast').remove();
+})

@@ -1,8 +1,8 @@
 let dataTableName = '';
+let formName = '';
 let id = '';
 $(document).ready(function() {
     loadTable();
-
 });
 
 function loadTable() {
@@ -24,33 +24,56 @@ function loadTable() {
 }
 
 function gettableDetails(params) {
-    singleDom(params);
-    let tempdata = {
-        "query": "name",
-        "key": params[0].master_table_name
-    }
-    commonAjax('database.php', 'POST', tempdata, '', '', '', { "functionName": "tableDom", "param1": params[0].master_table_name });
-}
+    formName = params[0].master_form_name;
+    dataTableName = params[0].master_table_name;
+    let r = JSON.parse(params[0].master_table_json);
+    let htmlDOM = '';
+    $.each(r, function(inx, val) {
+        htmlDOM += `<div class="mb-1">${domGenerator(val)}</div>`;
+    });
 
-function tableDom(params, tableName) {
-    dataTableName = tableName;
-    let name = params.message.split(',');
+    htmlDOM += `<button type="button" class="btn btn-primary btn-save data-submit me-1" data-type="new">Save</button>
+    <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>`;
+
+    $(".single-dom").html(htmlDOM);
+    console.log(htmlDOM);
+    $('.select2').select2();
+    $(".date").flatpickr();
+    $(".time").flatpickr({
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i",
+    });
+
     var tableHeader = [];
     let html = '<tr>';
-    let d = ['status', 'created_by', 'created_at', 'updated_at'];
-
-    $.each(name, function(i, v) {
-        if (!id) {
-            id = v;
-            v = 'S.No';
-        }
-        if (v) {
-            if (d.indexOf(v) == -1) {
+    id = dataTableName.replace('eks_', '') + "_id";
+    tableHeader.push({
+        "data": id
+    });
+    html += `<td>S.NO</td>`;
+    $.each(JSON.parse(params[0].master_table_json), function(i, v) {
+        if (v.name) {
+            if (v.type == 'file') {
                 tableHeader.push({
-                    "data": v
+                    "data": v.name,
+                    mRender: function(data, type, row) {
+                        return `ff`;
+                    }
                 });
-                html += `<td>${capitalizeFirstLetter((v.replace(/_/g, " ")))}</td>`;
+            } else if (v.type == 'select') {
+                tableHeader.push({
+                    "data": v.name,
+                    mRender: function(data, type, row) {
+                        return `${dropdownValuesList[v.name].find(x => x['ma_'+v.name+'_master_id'] == data).value }`;
+                    }
+                });
+            } else {
+                tableHeader.push({
+                    "data": v.name
+                });
             }
+            html += `<td>${v.label}</td>`;
         }
     });
     tableHeader.push({
@@ -58,10 +81,10 @@ function tableDom(params, tableName) {
         mRender: function(data, type, row) {
             return `<td>
                         <a data-bs-toggle="modal" data-bs-target="#modals-slide-in" title='Edit' data-id="${eval(row[id])}" class="btn btn-edit btn-icon btn-hover btn-sm btn-rounded pull-right">
-                            &#9998;
+                        <i class="gg-pen"></i>
                         </a>
-                        <a data-bs-toggle="modal" data-bs-target="#modals-slide-in" title='Edit' data-id="${eval(row[id])}" class="btn btn-edit btn-icon btn-hover btn-sm btn-rounded pull-right">
-                            &#9998;
+                        <a data-bs-toggle="modal"  title='Delete' data-id="${eval(row[id])}" class="btn btn-delete btn-icon btn-hover btn-sm btn-rounded pull-right">
+                        <i class="gg-trash-empty"></i>
                         </a>
                     </td>`;
         }
@@ -70,7 +93,7 @@ function tableDom(params, tableName) {
     $(".datatables-basic thead").html(html);
     let tempdata = {
         "query": "fetch",
-        "key": tableName,
+        "key": dataTableName,
         "column": {
             "*": "*"
         },
@@ -83,7 +106,8 @@ function tableDom(params, tableName) {
 }
 
 function tableDomGenerator(params, tableheader) {
-    $("#base-table").dataTable().fnDestroy();
+    if ($("#base-table").hasClass('dataTable'))
+        $("#base-table").dataTable().fnDestroy();
     var e = $(".datatables-basic"),
         t = $(".dt-date"),
         a = $(".dt-complex-header"),
@@ -99,7 +123,7 @@ function tableDomGenerator(params, tableheader) {
         buttons: [{ extend: "collection", className: "btn btn-outline-secondary dropdown-toggle me-2", text: feather.icons.clipboard.toSvg({ class: "font-small-4 me-50" }) + "PDF" }, { text: feather.icons.plus.toSvg({ class: "me-50 font-small-4" }) + "Add New Record", className: "create-new btn btn-primary", attr: { "data-bs-toggle": "modal", "data-bs-target": "#modals-slide-in" }, init: function(e, t, a) { $(t).removeClass("btn-secondary") } }],
         language: { paginate: { previous: "&nbsp;", next: "&nbsp;" } }
     });
-    $("div.head-label").html(`<h6 class="mb-0">${tablenameConvertor(dataTableName)}</h6>`);
+    $("div.head-label").html(`<h6 class="mb-0">${tablenameConvertor(formName)}</h6>`);
     feather.replace({
         width: 14,
         height: 14
@@ -109,29 +133,11 @@ function tableDomGenerator(params, tableheader) {
 function tablenameConvertor(params) {
     let n = params.replace("eks_", "");
     n = n.replace(/_/gi, ' ');
+    n = n.replace(/[0-9]+/gi, ' ');
+
     return capitalizeFirstLetter(n);
 }
 
-
-function singleDom(params) {
-    let r = JSON.parse(params[0].master_table_json);
-    let html = '';
-    $.each(r, function(inx, val) {
-        html += `<div class="mb-1">${domGenerator(val)}</div>`;
-    });
-
-    html += `<button type="button" class="btn btn-primary btn-save data-submit me-1" data-type="new">Save</button>
-    <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>`;
-
-    $(".single-dom").html(html);
-    $('.select2').select2();
-    $(".date").flatpickr();
-    $(".time").flatpickr({
-        enableTime: true,
-        noCalendar: true,
-        dateFormat: "H:i",
-    });
-}
 
 
 $(document).on('click', '.btn-save', function() {
@@ -156,6 +162,23 @@ $(document).on('click', '.btn-save', function() {
     commonAjax('database.php', 'POST', tempdata, '', '', '', { "functionName": "successCount" });
 
 });
+
+$(document).on('click', '.btn-delete', function() {
+    if (confirm('Are you sure want to delete?')) {
+        let tempdata = {
+            "query": 'update',
+            "key": dataTableName,
+            "values": {
+                "status": 0
+            },
+            "condition": {}
+
+        }
+        tempdata['condition'][id] = $(this).attr('data-id');
+        commonAjax('database.php', 'POST', tempdata, '', '', '', { "functionName": "successCount" });
+    }
+});
+
 
 $(document).on('click', '.create-new', function() {
     $('.btn-save').attr('data-type', 'new');
@@ -185,6 +208,7 @@ $(document).on('click', '.btn-edit', function() {
 function successCount(params) {
     if (params.status_code == 200) {
         loadTable();
-        showToast('Add Successfully', 'success')
+        showToast('Add Successfully', 'success');
+        $("#modals-slide-in").modal('hide');
     } else showToast('Please try again!!', 'error');
 }

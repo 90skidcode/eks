@@ -10,6 +10,7 @@ VANTA.WAVES({
     color: 0x884800
 
 });
+localStorage.clear();
 $(document).on('click', '.login', function() {
     let data = {
         "query": "fetch",
