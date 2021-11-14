@@ -138,8 +138,12 @@ function tableDomGenerator(params, tableheader) {
         "scrollX": true,
         lengthMenu: [25, 50, 75, 100],
         buttons: [{ extend: "collection", className: "btn btn-outline-secondary dropdown-toggle me-2", text: feather.icons.clipboard.toSvg({ class: "font-small-4 me-50" }) + "PDF" }, { text: feather.icons.plus.toSvg({ class: "me-50 font-small-4" }) + "Add New Record", className: "create-new btn btn-primary", attr: { "data-bs-toggle": "modal", "data-bs-target": "#modals-slide-in" }, init: function(e, t, a) { $(t).removeClass("btn-secondary") } }],
-        language: { paginate: { previous: "&nbsp;", next: "&nbsp;" } }
+        language: { paginate: { previous: "&nbsp;", next: "&nbsp;" } },
+        "order": [
+            [0, 'desc']
+        ],
     });
+
     $("div.head-label").html(`<h6 class="mb-0">${tablenameConvertor(formName)}</h6>`);
     feather.replace({
         width: 14,

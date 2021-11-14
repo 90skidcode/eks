@@ -844,3 +844,17 @@ a.badge-dark.focus {
     max-height: 60vh;
     overflow-y: auto;
 }
+
+div.dataTables_wrapper {
+    width: 100%;
+    margin: 0 auto;
+}
+
+.card {
+    overflow: hidden;
+}
+
+a.btn-edit,
+a.btn-delete {
+    margin: 5px;
+}
