@@ -17,10 +17,10 @@ var customerUrlid = url.searchParams.get("customer");
 $(document).ready(function() {
     $('body').prepend(html);
     user = JSON.parse(localStorage.getItem('user'));
-    let menuDom = ` <li class="nav-item d-none d-lg-block"><a href="../../pages/dashboard/dashboard.html" class="nav-link nav-link-style"><i class="ficon"
+    let menuDom = ` <li class="nav-item  d-lg-block"><a href="../../pages/dashboard/dashboard.html" class="nav-link nav-link-style"><i class="ficon"
                         data-feather="home"></i></a>
                     </li>
-                        <li class="nav-item d-none d-lg-block"><a class="nav-link nav-link-style share-link"><i class="ficon"
+                        <li class="nav-item  d-lg-block"><a class="nav-link nav-link-style share-link"><i class="ficon"
                         data-feather="share-2"></i></a>
                         </li>
                         <li class="nav-item dropdown">
@@ -31,7 +31,7 @@ $(document).ready(function() {
                         
                         </div>
                     </li>
-                        <li class="nav-item d-none d-lg-block"><a href="../../pages/add/add.html" class="nav-link nav-link-style"><i class="ficon"
+                        <li class="nav-item  d-lg-block"><a href="../../pages/add/add.html" class="nav-link nav-link-style"><i class="ficon"
                         data-feather="plus"></i></a>
                         </li>
                         <li class="nav-item dropdown">
@@ -42,9 +42,9 @@ $(document).ready(function() {
                         
                         </div>
                     </li>
-                   
-                        <li class="nav-item d-none d-lg-block"><a href="../../pages/setting/setting.html" class="nav-link nav-link-style"><i class="ficon"
-                        data-feather=""></i></a></li>
+                        <li class="nav-item d-none log-outs">
+                            <a class="dropdown-item" href="../../index.html"><i class="ficon" data-feather="log-out"></i></a>
+                        </li>
                     <li class="nav-item dropdown dropdown-language">
                         <a class="nav-link dropdown-toggle" id="dropdown-flag" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <span class="selected-language"></span></a>
@@ -52,10 +52,10 @@ $(document).ready(function() {
                         
                         </div>
                     </li>
-
+                    
                     <li class="nav-item dropdown dropdown-user">
                         <a class="nav-link dropdown-toggle dropdown-user-link" id="dropdown-user" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <div class="user-nav d-sm-flex d-none"><span class="user-name fw-bolder">1000120</span><span class="user-status">Admin</span></div>
+                            <div class="user-nav d-sm-flex "><span class="user-name fw-bolder">1000120</span><span class="user-status">Admin</span></div>
                             <span class="avatar">
                             <span 
                             class="avatar-status-online"></span></span>
@@ -72,7 +72,7 @@ $(document).ready(function() {
         $('body').addClass('customer-view');
         localStorage.removeItem("user");
         localStorage.setItem('customer-id', customerUrlid);
-        menuDom = ` <li class="nav-item d-none d-lg-block"><a href="../../pages/dashboard/dashboard.html?customer=${customerUrlid}" class="nav-link nav-link-style"><i class="ficon"
+        menuDom = ` <li class="nav-item  d-lg-block"><a href="../../pages/dashboard/dashboard.html?customer=${customerUrlid}" class="nav-link nav-link-style"><i class="ficon"
                         data-feather="home"></i></a>
                     </li>
                     <li class="nav-item dropdown">
@@ -85,13 +85,13 @@ $(document).ready(function() {
                     </li>`
     } else {
         if (user[0].user_type == '1') {
-            menuDom = ` <li class="nav-item d-none d-lg-block"><a href="../../pages/dashboard/dashboard.html" class="nav-link nav-link-style"><i class="ficon"
+            menuDom = ` <li class="nav-item  d-lg-block"><a href="../../pages/dashboard/dashboard.html" class="nav-link nav-link-style"><i class="ficon"
             data-feather="home"></i></a>
         </li>
-            <li class="nav-item d-none d-lg-block"><a class="nav-link nav-link-style share-link"><i class="ficon"
+            <li class="nav-item  d-lg-block"><a class="nav-link nav-link-style share-link"><i class="ficon"
             data-feather="share-2"></i></a>
             </li>
-            <li class="nav-item d-none d-lg-block"><a href="../../pages/add/add.html" class="nav-link nav-link-style"><i class="ficon"
+            <li class="nav-item  d-lg-block"><a href="../../pages/add/add.html" class="nav-link nav-link-style"><i class="ficon"
             data-feather="plus"></i></a>
             </li>
             <li class="nav-item dropdown">
@@ -113,7 +113,7 @@ $(document).ready(function() {
     
         <li class="nav-item dropdown dropdown-user">
             <a class="nav-link dropdown-toggle dropdown-user-link" id="dropdown-user" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <div class="user-nav d-sm-flex d-none"><span class="user-name fw-bolder">1000120</span><span class="user-status">Admin</span></div>
+                <div class="user-nav d-sm-flex "><span class="user-name fw-bolder">1000120</span><span class="user-status">Admin</span></div>
                 <span class="avatar">
                 <span 
                 class="avatar-status-online"></span></span>

@@ -922,3 +922,19 @@ span.img-clear {
     width: auto;
     position: relative;
 }
+
+@media (max-width:767.98px) {
+    .header-navbar .navbar-container ul.navbar-nav li .selected-language,
+    .log-outs {
+        display: block !important;
+    }
+    li.nav-item {
+        margin-bottom: 10px;
+    }
+    li.nav-item.dropdown.dropdown-user {
+        display: none;
+    }
+    li.nav-item.dropdown.dropdown-language {
+        margin-left: 5px;
+    }
+}
