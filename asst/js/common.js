@@ -537,7 +537,9 @@ function domGenerator(j) {
                     <input type="number" name="${j.name}" class="form-control ${j.name}" id="${j.name}" placeholder=""  /> `;
         case 'file':
             return `<label class="form-label" for="${j.name}">${j.label}</label>
-                    <input type="file" name="${j.name}" class="form-control ${j.name}" id="${j.name}"  accept="image/*" placeholder=""  /> `;
+                    <input type="file"  class="form-control ${j.name}s" id="${j.name}s" data-id="${r}gg"  accept="image/*" placeholder=""  /> 
+                    <div class="progress-bar"></div>
+                    <input type="hidden" name="${j.name}" class="${j.name}" id="${r}gg"  placeholder=""  /> `;
         case 'date':
             return `<label class="form-label " for="${j.name}">${j.label}</label>
                     <input type="text" name="${j.name}" id="${j.name}" class="form-control post date" placeholder="MM/DD/YYYY" aria-label="MM/DD/YYYY" />`
@@ -576,7 +578,10 @@ var dropdownValuesList = [];
 
 function dropdownValues(table_name, r) {
     let c = '';
-    (localStorage.getItem('company-id')) ? c = localStorage.getItem('company-id'): c = user[0].company_id;
+    let ch = '';
+    (typeof(customerUrlid) != 'undefined' && customerUrlid) ? ch = customerUrlid: ch = user[0].company_id;
+
+    (localStorage.getItem('company-id')) ? c = localStorage.getItem('company-id'): c = ch;
     let tempdata = {
         "query": "fetch",
         "key": "ma_" + table_name + "_master",
@@ -636,23 +641,12 @@ var uploadData = '';
 $(document).ready(function() {
     $(document).on('change', 'input[type="file"]', function() {
         $(".btn-save").prop('disabled', true);
-        var formData = new FormData();
-        formData.append('file', $(this)[0].files[0]);
-        let randomClass = randomString(16, 'aA');
-        let html = ` <div class="col-md-3 ${randomClass}" data-val="">
-                         <span class="badge-danger float-right border-radius-round position-absolute pointer remove-img" title="remove">
-                             <span class="icon-holder d-none">
-                                 <i class="anticon anticon-close"></i>
-                             </span>
-                         </span>
-                         <img class="w-100" src="" alt="">
-                         <div class="progress">
-                             <div class="progress-bar progress-bar-animated bg-success" role="progressbar" style="width: 0%"></div>
-                         </div>
-                     </div>`;
-        $(".image-prev-area").append(html);
-        $(".image-prev-area").removeClass('d-none');
-        readURL(this, randomClass);
+        var t = $(this)
+        var file_data = t.prop('files')[0];
+        console.log(file_data);
+        var form_data = new FormData();
+        form_data.append('file', file_data);
+
         $.ajax({
             xhr: function() {
                 var xhr = new window.XMLHttpRequest();
@@ -660,33 +654,39 @@ $(document).ready(function() {
                     if (evt.lengthComputable) {
                         var percentComplete = evt.loaded / evt.total;
                         percentComplete = parseInt(percentComplete * 100);
-                        $("." + randomClass + " .progress-bar").css({
+                        t.closest('div').find(".progress-bar").css({
                             width: percentComplete + "%"
                         })
                         if (percentComplete === 100) {
-
+                            setTimeout(() => {
+                                t.closest('div').find(".progress-bar").css({
+                                    width: 0 + "%"
+                                })
+                            }, 2000);
                         }
                     }
                 }, false);
                 return xhr;
             },
             url: serverUrl + 'upload.php',
-            type: 'POST',
-            data: formData,
+            type: "POST",
+            data: form_data,
+            contentType: false,
+            enctype: 'multipart/form-data',
+            cache: false,
+            processData: false,
             success: function(data) {
                 $(".btn-save").prop('disabled', false);
                 let dataResult = JSON.parse(data);
-                $("#upload").val(null);
-                $("." + randomClass + " .icon-holder").removeClass('d-none');
                 if (dataResult.status_code == 200) {
                     showToast(dataResult.message, 'success');
-                    uploadData.push(dataResult.result);
-                    $("." + randomClass).attr('data-val', dataResult.result);
+                    $("#" + t.attr('data-id')).val(' ');
+                    $("#" + t.attr('data-id')).val(dataResult.result);
+                    t.closest('div').find('.img-area').remove();
+                    t.closest('div').append(`<div class="img-area"><span class="img-clear">X</span> <img src="${serverUrl}/uploads/${dataResult.result}" width="150" height="150"> </div>`)
                 } else {
                     showToast(dataResult.message, 'error');
                 }
-                uploadData = uploadData.filter(function(e) { return e });
-                $('[name=customer_doc]').val(uploadData.toString());
             },
             error: function(data) {
                 $(".btn-save").prop('disabled', false);
@@ -698,15 +698,10 @@ $(document).ready(function() {
     });
 });
 
-$(document).on('click', '.image-prev-area .remove-img', function() {
-    var value = $(this).closest('div').attr('data-val');
-    uploadData = $('[name=customer_doc]').val().split(",");
-    if (value) {
-        uploadData = removeItemOnce(uploadData, value);
-        uploadData = uploadData.filter(function(e) { return e });
-        $('[name=customer_doc]').val(uploadData.toString());
-    }
-    $(this).closest('div').remove();
+$(document).on('click', '.img-clear', function() {
+    $(this).closest('.mb-1').find('[type=hidden]').val('');
+    $(this).closest('.mb-1').find('[type=file]').val('');
+    $(this).closest('.img-area').remove();
     showToast("File removed successfully", 'success');
 })
 

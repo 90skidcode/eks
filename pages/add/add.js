@@ -142,11 +142,13 @@ function menulist(params) {
     })
 
 }
-
+let clicked = '';
 $(document).on('click', '.btn-save', function() {
+
     let c = $(this).closest('.card').find('form').attr('class');
     let t = $(this).closest('.card').find('form').attr('data-table');
     let v = $("." + c).repeaterVal();
+    clicked = $("." + c);
     $.each(v[t], function(i, val) {
         let tempdata = {
             "query": "add",
@@ -160,4 +162,7 @@ $(document).on('click', '.btn-save', function() {
 
 function successCount(params) {
     (params.status_code == 200) ? showToast('Add Successfully', 'success'): showToast('Please try again!!', 'error');
+    $('[data-repeater-list]').empty();
+    $('[data-repeater-create]').click();
+
 }

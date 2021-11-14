@@ -221,11 +221,11 @@ thead {
     background-color: rgba(255, 255, 255, 0.85);
     background-clip: padding-box;
     border: 1px solid rgba(0, 0, 0, 0.1);
-    box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.1);
+    box-shadow: -1px 1px 6px 9px rgb(0 0 0 / 10%);
     -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
     opacity: 0;
-    border-radius: 0.25rem
+    border-radius: 0.25rem;
 }
 
 .toast:not(:last-child) {
@@ -246,15 +246,15 @@ thead {
 }
 
 .toast-header {
-    display: flex;
+    display: block;
     align-items: center;
     text-align: left;
     justify-content: space-evenly;
     padding: 0.25rem 0.75rem;
-    color: #6c757d;
-    background-color: rgba(255, 255, 255, 0.85);
+    color: #fff;
+    background-color: transparent;
     background-clip: padding-box;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05)
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .toast-body {
@@ -485,7 +485,7 @@ a.badge-secondary.focus {
 
 .badge-success {
     color: #fff;
-    background-color: #28a745
+    background-color: #1e7e34;
 }
 
 a.badge-success:hover,
@@ -745,7 +745,7 @@ a.badge-dark.focus {
 }
 
 .toast-body {
-    background-color: #eeeeee;
+    background-color: transparent;
 }
 
 .gg-trash-empty {
@@ -857,4 +857,68 @@ div.dataTables_wrapper {
 a.btn-edit,
 a.btn-delete {
     margin: 5px;
+}
+
+.customer-view .dt-action-buttons.text-end,
+.customer-view .btn-edit,
+.customer-view .btn-delete {
+    display: none;
+}
+
+[type="file"] {
+    /* Style the color of the message that says 'No file chosen' */
+    color: #000;
+}
+
+[type="file"]::-webkit-file-upload-button {
+    background: #c30c1f;
+    border: 2px solid #c30c1f;
+    border-radius: 4px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 12px;
+    outline: none;
+    padding: 10px 25px;
+    text-transform: uppercase;
+    transition: all 1s ease;
+}
+
+[type="file"]::-webkit-file-upload-button:hover {
+    background: #c30c1f;
+    border: 2px solid #535353;
+    color: #000;
+}
+
+.progress-bar {
+    display: -webkit-box;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    color: #FFF;
+    background-color: #28c76f;
+    -webkit-transition: width .6s ease;
+    transition: width .6s ease;
+    width: 0%;
+    height: 2px;
+    /* border-radius: 50%; */
+}
+
+span.img-clear {
+    position: absolute;
+    background: red;
+    padding: 5px;
+    right: 10px;
+    border-radius: 50%;
+    color: #fff;
+    margin-top: 15px;
+    cursor: pointer;
+}
+
+.img-area {
+    width: auto;
+    position: relative;
 }

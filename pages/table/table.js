@@ -58,10 +58,11 @@ function gettableDetails(params) {
         "data": id
     });
     html += `<td>ID</td>`;
-    tableHeader.push({
-        "data": 'status',
-        mRender: function(data, type, row) {
-            return `<div class="text-center">
+    if (typeof(customerUrlid) != 'undefined' && !customerUrlid) {
+        tableHeader.push({
+            "data": 'status',
+            mRender: function(data, type, row) {
+                return `<div class="text-center">
                         <a data-bs-toggle="modal" data-bs-target="#modals-slide-in" title='Edit' data-id="${eval(row[id])}" class="btn btn-edit btn-icon btn-hover btn-sm btn-rounded pull-right">
                         <i class="gg-pen"></i>
                         </a>
@@ -69,19 +70,24 @@ function gettableDetails(params) {
                         <i class="gg-trash-empty"></i>
                         </a>
                     </div>`;
-        }
-    });
-    html += '<td class="text-center">Action</td>';
+            }
+        });
+        html += '<td class="text-center">Action</td>';
+    }
     $.each(JSON.parse(params[0].master_table_json), function(i, v) {
         if (v.name) {
             if (v.type == 'file') {
                 tableHeader.push({
                     "data": v.name,
                     mRender: function(data, type, row) {
-                        return `ff`;
+                        if (data)
+                            return `<img src="${serverUrl}/uploads/${data}" width="50" height="50">`;
+                        else
+                            return '';
                     }
                 });
             } else if (v.type == 'select' || v.type == 'textarea') {
+
                 tableHeader.push({
                     "data": v.name,
                     mRender: function(data, type, row) {
@@ -96,6 +102,7 @@ function gettableDetails(params) {
                         }
                     }
                 });
+
             } else {
                 tableHeader.push({
                     "data": v.name
