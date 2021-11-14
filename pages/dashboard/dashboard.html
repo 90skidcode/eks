@@ -17,6 +17,11 @@
 </head>
 
 <body class="vertical-layout vertical-menu-modern 1-column navbar-floating footer-static" data-open="click" data-menu="vertical-menu-modern" data-col="1-column">
+    <div class="loader-area">
+        <div class="loader-overlay">
+            <div class="loader"></div>
+        </div>
+    </div>
     <div class="content-wrapper container-lg p-0 mt-1">
         <div class="content-body">
             <section id="dashboard-ecommerce">
@@ -24,7 +29,7 @@
                     <div class="col-xl-4 col-md-6 col-12">
                         <div class="card card-congratulation-medal">
                             <div class="card-body">
-                                <h5>Welcome 🎉 Admin!</h5>
+                                <h5>Welcome 🎉 <span class="user-status"></span>!</h5>
                                 <p class="card-text font-small-3">You are in </p>
                                 <h3 class="mb-75 mt-2 pt-50">
                                     <a class="selected-company-name" href="#">SCL - Machine Shop - Oil - Padi</a>
@@ -33,7 +38,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-8 ">
+                    <div class="col-lg-8">
                         <div class="card card-company-table">
                             <div class="card-body p-0">
                                 <div class="table-responsive">
@@ -41,9 +46,9 @@
                                         <thead>
                                             <tr>
                                                 <th></th>
-                                                <th>Sep Month</th>
-                                                <th>Aug Month</th>
-                                                <th>July Month</th>
+                                                <th>Current Month</th>
+                                                <th>Previous Month</th>
+
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -58,11 +63,7 @@
                                                         <span class="fw-bolder mb-25">23</span>
                                                     </div>
                                                 </td>
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <span class="fw-bolder mb-25">23</span>
-                                                    </div>
-                                                </td>
+
                                                 <td>
                                                     <div class="d-flex align-items-center">
                                                         <span class="fw-bolder me-1">97</span>
@@ -76,11 +77,7 @@
                                                         <div class="fw-bolder">Lube Oil Cons</div>
                                                     </div>
                                                 </td>
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <span class="fw-bolder mb-25">253</span>
-                                                    </div>
-                                                </td>
+
 
                                                 <td>
                                                     <div class="d-flex align-items-center">
@@ -100,11 +97,7 @@
                                                         <div class="fw-bolder">Coolant Consumption</div>
                                                     </div>
                                                 </td>
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <span class="fw-bolder mb-25">23</span>
-                                                    </div>
-                                                </td>
+
                                                 <td>
                                                     <div class="d-flex align-items-center">
                                                         <span class="fw-bolder mb-25">23</span>
@@ -123,11 +116,7 @@
                                                         <div class="fw-bolder">Abnormalities Created</div>
                                                     </div>
                                                 </td>
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <span class="fw-bolder mb-25">57</span>
-                                                    </div>
-                                                </td>
+
                                                 <td>
                                                     <div class="d-flex align-items-center">
                                                         <span class="fw-bolder mb-25">23</span>
@@ -146,11 +135,7 @@
                                                         <div class="fw-bolder">Abnormalities Closed</div>
                                                     </div>
                                                 </td>
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <span class="fw-bolder mb-25">756</span>
-                                                    </div>
-                                                </td>
+
                                                 <td>
                                                     <div class="d-flex align-items-center">
                                                         <span class="fw-bolder mb-25">23</span>
@@ -169,11 +154,7 @@
                                                         <div class="fw-bolder">Low % Machines Count</div>
                                                     </div>
                                                 </td>
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <span class="fw-bolder mb-25">234</span>
-                                                    </div>
-                                                </td>
+
                                                 <td>
                                                     <div class="d-flex align-items-center">
                                                         <span class="fw-bolder mb-25">23</span>
@@ -192,11 +173,7 @@
                                                         <div class="fw-bolder">Low Level Machines</div>
                                                     </div>
                                                 </td>
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <span class="fw-bolder mb-25">343</span>
-                                                    </div>
-                                                </td>
+
                                                 <td>
                                                     <div class="d-flex align-items-center">
                                                         <span class="fw-bolder mb-25">23</span>

@@ -12,12 +12,6 @@ $('input').attr('autocomplete', 'no-fill');
 
 $('.content-body').prepend(`<div class="notification-toast top-right" id="notification-toast"></div>`);
 
-/* Add Loader to body */
-$('body').prepend(`<div class="loader-area">
-    <div class="loader-overlay">
-        <div class="loader"></div>
-    </div>
-</div>`);
 /**
  * Select 2
 
@@ -172,8 +166,8 @@ function showToast(msg, type) {
     let icon = '';
     (type == 'error') ? background = 'badge-danger': background = 'badge-success';
     (type == 'success') ? icon = 'anticon-check-circle': icon = 'anticon-info-circle'
-    var toastHTML = `<div class="toast fade hide">
-        <div class="toast-header ${background}">
+    var toastHTML = `<div class="toast fade hide ${background}">
+        <div class="toast-header ">
             <i class="anticon ${icon} m-r-5 text-white"></i>
             <strong class="mr-auto">${type.toUpperCase()}</strong>
             <button type="button" class="ml-2 close text-white" data-dismiss="toast" aria-label="Close">
@@ -189,7 +183,7 @@ function showToast(msg, type) {
     $('#notification-toast .toast').toast('show');
     setTimeout(function() {
         $('#notification-toast .toast:first-child').remove();
-    }, 115000);
+    }, 50000);
 }
 
 
@@ -210,7 +204,7 @@ $("input[type=number]").each(function(index) {
  */
 
 function loader(type) {
-    (type) ? $(".loader-area").addClass('display-block'): $(".loader-area").removeClass('display-block');
+    (type) ? $(".loader-area").removeClass('display-none'): $(".loader-area").addClass('display-none');
 }
 
 /* For Validate Required field */

@@ -303,7 +303,6 @@ a.close.disabled {
     width: 100vw;
     height: 100%;
     overflow: hidden;
-    display: none;
     position: absolute;
     background: #ffffff85;
     z-index: 2147483647;
@@ -835,4 +834,13 @@ a.badge-dark.focus {
 
 .display-block {
     display: block;
+}
+
+.display-none {
+    display: none;
+}
+
+.dropdown-menu {
+    max-height: 60vh;
+    overflow-y: auto;
 }

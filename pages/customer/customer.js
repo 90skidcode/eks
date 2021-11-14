@@ -1,11 +1,15 @@
-let dataTableName = '';
+let dataTableName = 'company_master';
 let formName = '';
 let id = '';
 let companyList = '';
 $(document).ready(function() {
+    loadTable();
+});
+
+function loadTable(params) {
     let tempdata = {
         "query": "fetch",
-        "key": 'company_master',
+        "key": dataTableName,
         "column": {
             "*": "*"
         },
@@ -15,96 +19,65 @@ $(document).ready(function() {
         "like": ""
     }
     commonAjax('database.php', 'POST', tempdata, '', '', '', { "functionName": "getCompany" });
-});
+}
 
 function getCompany(params) {
-    var url = new URL(window.location.href);
-    id = url.searchParams.get("id");
-    companyList = params;
-    let e = '';
-    $.each(params, function(i, v) {
-        e += `<option value='${v.company_master_id}'>${v.company_master}</option>`;
-    });
-    let html = `
-                <div class="mb-1"> 
-                    <label class="form-label" for="id">Company</label>                    
-                    <select class="form-control select2" name="company_id">
-                        ${e}
-                    </select>
+    let html = `<div class="mb-1"> 
+                    <label class="form-label" for="company_master">Name</label>
+                    <input type="text" name="company_master" class="form-control" placeholder="" />
                 </div>
                 <div class="mb-1"> 
-                    <label class="form-label" for="value">Value</label>
-                    <input type="text" name="value" class="form-control" id="value" placeholder="" />
+                    <label class="form-label" for="company_mobile">Mobile</label>
+                    <input type="number" name="company_mobile" class="form-control" placeholder="" />
+                </div>
+                <div class="mb-1"> 
+                    <label class="form-label" for="company_email">Email</label>
+                    <textarea type="text" name="company_email" class="form-control" placeholder="" ></textarea>
+                </div>
+                <div class="mb-1"> 
+                    <label class="form-label" for="email_template">EKS Email</label>
+                    <textarea type="text" name="email_template" class="form-control" placeholder="" ></textarea>
                 </div>
                 <button type="button" class="btn btn-primary btn-save data-submit me-1" data-type="new">Save</button>
                 <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>`;
     $('.single-dom').html(html);
-    loadTable();
-}
 
-
-function loadTable() {
-    if (getParameter('id')) {
-        let tempdata = {
-            "query": "fetch",
-            "key": getParameter('id'),
-            "column": {
-                "*": "*"
-            },
-            "condition": {
-                'status': '1'
-            },
-            "like": ""
-        }
-        commonAjax('database.php', 'POST', tempdata, '', '', '', { "functionName": "gettableDetails" });
-    } else
-        location.href = '../login/login.html';
-}
-
-function gettableDetails(params) {
-    var url = new URL(window.location.href);
-    id = url.searchParams.get("id");
-    dataTableName = id;
-    var tableHeader = [];
-    let html = '<tr>';
-    id = id + "_id";
-    tableHeader.push({
-        "data": id
+    var tableHeader = [{
+        "data": 'company_master_id'
     }, {
-        "data": 'company_id',
-        mRender: function(data, type, row) {
-            try {
-                if (data && typeof(data) != 'undefined' && data != 'undefined')
-                    return `${companyList.find(x => x['company_master_id'] == data).company_master }`;
-                else
-                    return '';
-            } catch (e) {
-                return '';
-            }
-        }
+        "data": 'company_master'
     }, {
-        "data": 'value'
-    });
-    html += `<td>ID</td>    
-    <td>Company Name</td>
-    <td>Value</td>`;
+        "data": 'company_mobile'
+    }, {
+        "data": 'company_email'
+    }, {
+        "data": 'email_template'
+    }];
+
     tableHeader.push({
         "data": 'status',
-
         mRender: function(data, type, row) {
             return `<div class="text-center">
-                        <a data-bs-toggle="modal" data-bs-target="#modals-slide-in" title='Edit' data-id="${eval(row[id])}" class="btn btn-edit btn-icon btn-hover btn-sm btn-rounded pull-right">
-                        <i class="gg-pen"></i>
+                        <a data-bs-toggle="modal" data-bs-target="#modals-slide-in" title='Edit' data-id="${row['company_master_id']}" class="btn btn-edit btn-icon btn-hover btn-sm btn-rounded pull-right">
+                            <i class="gg-pen"></i>
                         </a>
-                        <a data-bs-toggle="modal"  title='Delete' data-id="${eval(row[id])}" class="btn btn-delete btn-icon btn-hover btn-sm btn-rounded pull-right">
-                        <i class="gg-trash-empty"></i>
+                        <a data-bs-toggle="modal"  title='Delete'  data-id="${row['company_master_id']}" class="btn btn-delete btn-icon btn-hover btn-sm btn-rounded pull-right">
+                            <i class="gg-trash-empty"></i>
                         </a>
                     </div>`;
         }
     });
-    html += '<td class="text-center">Action</td></tr>';
-    $(".datatables-basic thead").html(html);
-    tableDomGenerator(params, tableHeader)
+
+    let tableHtml = `<tr>
+                        <td>ID</td>    
+                        <td>Company Name</td>
+                        <td>Mobile</td>
+                        <td>Client Email</td>
+                        <td>EKS Email</td>
+                        <td>Action</td>
+                    </tr>`;
+    $(".datatables-basic thead").html(tableHtml);
+    tableDomGenerator(params, tableHeader);
 }
 
 function tableDomGenerator(params, tableheader) {
@@ -128,7 +101,7 @@ function tableDomGenerator(params, tableheader) {
         buttons: [{ extend: "collection", className: "btn btn-outline-secondary dropdown-toggle me-2", text: feather.icons.clipboard.toSvg({ class: "font-small-4 me-50" }) + "PDF" }, { text: feather.icons.plus.toSvg({ class: "me-50 font-small-4" }) + "Add New Record", className: "create-new btn btn-primary", attr: { "data-bs-toggle": "modal", "data-bs-target": "#modals-slide-in" }, init: function(e, t, a) { $(t).removeClass("btn-secondary") } }],
         language: { paginate: { previous: "&nbsp;", next: "&nbsp;" } }
     });
-    $("div.head-label").html(`<h6 class="mb-0">${removeUnWanted(id)}</h6>`);
+    $("div.head-label").html(`<h6 class="mb-0">Customer List</h6>`);
     feather.replace({
         width: 14,
         height: 14
@@ -163,7 +136,7 @@ $(document).on('click', '.btn-save', function() {
             "condition": {}
 
         }
-        tempdata['condition'][id] = $(this).attr('data-id');
+        tempdata['condition']['company_master_id'] = $(this).attr('data-id');
     }
     commonAjax('database.php', 'POST', tempdata, '', '', '', { "functionName": "successCount" });
 
@@ -180,7 +153,7 @@ $(document).on('click', '.btn-delete', function() {
             "condition": {}
 
         }
-        tempdata['condition'][id] = $(this).attr('data-id');
+        tempdata['condition']['company_master_id'] = $(this).attr('data-id');
         commonAjax('database.php', 'POST', tempdata, '', '', '', { "functionName": "successCount" });
     }
 });
@@ -201,12 +174,11 @@ $(document).on('click', '.btn-edit', function() {
             "*": "*"
         },
         "condition": {
-            'status': '1',
-
+            'status': '1'
         },
         "like": ""
-    }
-    tempdata.condition[id] = $(this).attr('data-id');
+    };
+    tempdata.condition['company_master_id'] = $(this).attr('data-id');
     $("#single-dom")[0].reset();
     commonAjax('database.php', 'POST', tempdata, '', '', '', { "functionName": "multipleSetValue" });
 });

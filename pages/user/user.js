@@ -1,5 +1,5 @@
-let dataTableName = '';
-let formName = '';
+let dataTableName = 'user';
+let companyArray = '';
 let id = '';
 let companyList = '';
 $(document).ready(function() {
@@ -15,96 +15,106 @@ $(document).ready(function() {
         "like": ""
     }
     commonAjax('database.php', 'POST', tempdata, '', '', '', { "functionName": "getCompany" });
+
 });
 
 function getCompany(params) {
-    var url = new URL(window.location.href);
-    id = url.searchParams.get("id");
-    companyList = params;
-    let e = '';
+    companyArray = params;
     $.each(params, function(i, v) {
-        e += `<option value='${v.company_master_id}'>${v.company_master}</option>`;
+        companyList += `<option value='${v.company_master_id}'>${v.company_master}</option>`;
     });
-    let html = `
-                <div class="mb-1"> 
-                    <label class="form-label" for="id">Company</label>                    
-                    <select class="form-control select2" name="company_id">
-                        ${e}
-                    </select>
-                </div>
-                <div class="mb-1"> 
-                    <label class="form-label" for="value">Value</label>
-                    <input type="text" name="value" class="form-control" id="value" placeholder="" />
-                </div>
-                <button type="button" class="btn btn-primary btn-save data-submit me-1" data-type="new">Save</button>
-                <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>`;
-    $('.single-dom').html(html);
     loadTable();
 }
 
 
-function loadTable() {
-    if (getParameter('id')) {
-        let tempdata = {
-            "query": "fetch",
-            "key": getParameter('id'),
-            "column": {
-                "*": "*"
-            },
-            "condition": {
-                'status': '1'
-            },
-            "like": ""
-        }
-        commonAjax('database.php', 'POST', tempdata, '', '', '', { "functionName": "gettableDetails" });
-    } else
-        location.href = '../login/login.html';
+function tablenameConvertor(params) {
+    let n = params.replace("eks_", "");
+    n = n.replace(/_/gi, ' ');
+    n = n.replace(/[0-9]+/gi, ' ');
+
+    return capitalizeFirstLetter(n);
 }
 
-function gettableDetails(params) {
-    var url = new URL(window.location.href);
-    id = url.searchParams.get("id");
-    dataTableName = id;
-    var tableHeader = [];
-    let html = '<tr>';
-    id = id + "_id";
-    tableHeader.push({
-        "data": id
+function loadTable(params) {
+    let tempdata = {
+        "query": "fetch",
+        "key": dataTableName,
+        "column": {
+            "*": "*"
+        },
+        "condition": {
+            'status': '1',
+        },
+        "like": ""
+    }
+    commonAjax('database.php', 'POST', tempdata, '', '', '', { "functionName": "getUser" }, { "functionName": "getUser" });
+}
+
+function getUser(params) {
+    let html = `<div class="mb-1"> 
+                    <label class="form-label" for="user_name">Name</label>
+                    <input type="text" name="user_name" class="form-control" placeholder="" />
+                </div>
+                <div class="mb-1"> 
+                    <label class="form-label" for="user_password">Password</label>
+                    <input type="text" name="user_password" class="form-control" placeholder="" />
+                </div>
+                <div class="mb-1"> 
+                    <label class="form-label" for="company_id">Company</label>
+                    <select class="form-control select2" data-id="select2" name="company_id" > 
+                    ${companyList}
+                    </select>
+                </div>
+                
+                <button type="button" class="btn btn-primary btn-save data-submit me-1" data-type="new">Save</button>
+                <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>`;
+    $('.single-dom').html(html);
+
+    var tableHeader = [{
+        "data": 'user_id'
+    }, {
+        "data": 'user_name'
+    }, {
+        "data": 'user_password'
     }, {
         "data": 'company_id',
         mRender: function(data, type, row) {
+            // console.log(dropdownValuesList[v.name].find(x => x['ma_' + v.name + '_master_id'] == data).value);
             try {
                 if (data && typeof(data) != 'undefined' && data != 'undefined')
-                    return `${companyList.find(x => x['company_master_id'] == data).company_master }`;
+                    return `${companyArray.find(x => x['company_master_id'] == data). company_master }`;
                 else
                     return '';
             } catch (e) {
                 return '';
             }
         }
-    }, {
-        "data": 'value'
-    });
-    html += `<td>ID</td>    
-    <td>Company Name</td>
-    <td>Value</td>`;
+    }];
+
     tableHeader.push({
         "data": 'status',
-
         mRender: function(data, type, row) {
             return `<div class="text-center">
-                        <a data-bs-toggle="modal" data-bs-target="#modals-slide-in" title='Edit' data-id="${eval(row[id])}" class="btn btn-edit btn-icon btn-hover btn-sm btn-rounded pull-right">
-                        <i class="gg-pen"></i>
+                        <a data-bs-toggle="modal" data-bs-target="#modals-slide-in" title='Edit' data-id="${row['user_id']}" class="btn btn-edit btn-icon btn-hover btn-sm btn-rounded pull-right">
+                            <i class="gg-pen"></i>
                         </a>
-                        <a data-bs-toggle="modal"  title='Delete' data-id="${eval(row[id])}" class="btn btn-delete btn-icon btn-hover btn-sm btn-rounded pull-right">
-                        <i class="gg-trash-empty"></i>
+                        <a data-bs-toggle="modal"  title='Delete'  data-id="${row['user_id']}" class="btn btn-delete btn-icon btn-hover btn-sm btn-rounded pull-right">
+                            <i class="gg-trash-empty"></i>
                         </a>
                     </div>`;
         }
     });
-    html += '<td class="text-center">Action</td></tr>';
-    $(".datatables-basic thead").html(html);
-    tableDomGenerator(params, tableHeader)
+
+    let tableHtml = `<tr>
+                        <td>ID</td>    
+                        <td>Name</td>
+                        <td>Password</td>
+                        <td>Company</td>
+
+                        <td class="text-center">Action</td>
+                    </tr>`;
+    $(".datatables-basic thead").html(tableHtml);
+    tableDomGenerator(params, tableHeader);
 }
 
 function tableDomGenerator(params, tableheader) {
@@ -128,7 +138,7 @@ function tableDomGenerator(params, tableheader) {
         buttons: [{ extend: "collection", className: "btn btn-outline-secondary dropdown-toggle me-2", text: feather.icons.clipboard.toSvg({ class: "font-small-4 me-50" }) + "PDF" }, { text: feather.icons.plus.toSvg({ class: "me-50 font-small-4" }) + "Add New Record", className: "create-new btn btn-primary", attr: { "data-bs-toggle": "modal", "data-bs-target": "#modals-slide-in" }, init: function(e, t, a) { $(t).removeClass("btn-secondary") } }],
         language: { paginate: { previous: "&nbsp;", next: "&nbsp;" } }
     });
-    $("div.head-label").html(`<h6 class="mb-0">${removeUnWanted(id)}</h6>`);
+    $("div.head-label").html(`<h6 class="mb-0">Employee List</h6>`);
     feather.replace({
         width: 14,
         height: 14
@@ -163,7 +173,7 @@ $(document).on('click', '.btn-save', function() {
             "condition": {}
 
         }
-        tempdata['condition'][id] = $(this).attr('data-id');
+        tempdata['condition']['user_id'] = $(this).attr('data-id');
     }
     commonAjax('database.php', 'POST', tempdata, '', '', '', { "functionName": "successCount" });
 
@@ -180,7 +190,7 @@ $(document).on('click', '.btn-delete', function() {
             "condition": {}
 
         }
-        tempdata['condition'][id] = $(this).attr('data-id');
+        tempdata['condition']['user_id'] = $(this).attr('data-id');
         commonAjax('database.php', 'POST', tempdata, '', '', '', { "functionName": "successCount" });
     }
 });
@@ -201,12 +211,11 @@ $(document).on('click', '.btn-edit', function() {
             "*": "*"
         },
         "condition": {
-            'status': '1',
-
+            'status': '1'
         },
         "like": ""
-    }
-    tempdata.condition[id] = $(this).attr('data-id');
+    };
+    tempdata.condition['user_id'] = $(this).attr('data-id');
     $("#single-dom")[0].reset();
     commonAjax('database.php', 'POST', tempdata, '', '', '', { "functionName": "multipleSetValue" });
 });

@@ -24,10 +24,14 @@ $(document).on('click', '.login', function() {
         },
         "like": ""
     }
-    commonAjax('database.php', 'POST', data, '', '', '', { "functionName": "login" })
+    commonAjax('database.php', 'POST', data, '', '', '', { "functionName": "login" }, { "functionName": "login" })
 });
 
 function login(res) {
-    localStorage.setItem('user', JSON.stringify(res));
-    location.href = '../dashboard/dashboard.html';
+    if (!res.length) {
+        showToast('Invalid User id & Password', 'error')
+    } else {
+        localStorage.setItem('user', JSON.stringify(res));
+        location.href = '../dashboard/dashboard.html';
+    }
 }

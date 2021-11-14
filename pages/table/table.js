@@ -50,18 +50,18 @@ function gettableDetails(params) {
     tableHeader.push({
         "data": id
     });
-    html += `<td>S.NO</td>`;
+    html += `<td>ID</td>`;
     tableHeader.push({
         "data": 'status',
         mRender: function(data, type, row) {
-            return `<td>
+            return `<div class="text-center">
                         <a data-bs-toggle="modal" data-bs-target="#modals-slide-in" title='Edit' data-id="${eval(row[id])}" class="btn btn-edit btn-icon btn-hover btn-sm btn-rounded pull-right">
                         <i class="gg-pen"></i>
                         </a>
                         <a data-bs-toggle="modal"  title='Delete' data-id="${eval(row[id])}" class="btn btn-delete btn-icon btn-hover btn-sm btn-rounded pull-right">
                         <i class="gg-trash-empty"></i>
                         </a>
-                    </td>`;
+                    </div>`;
         }
     });
     html += '<td class="text-center">Action</td>';
@@ -79,10 +79,14 @@ function gettableDetails(params) {
                     "data": v.name,
                     mRender: function(data, type, row) {
                         // console.log(dropdownValuesList[v.name].find(x => x['ma_' + v.name + '_master_id'] == data).value);
-                        if (data && typeof(data) != 'undefined' && data != 'undefined')
-                            return `${dropdownValuesList[v.name].find(x => x['ma_'+v.name+'_master_id'] == data).value }`;
-                        else
+                        try {
+                            if (data && typeof(data) != 'undefined' && data != 'undefined')
+                                return `${dropdownValuesList[v.name].find(x => x['ma_'+v.name+'_master_id'] == data).value }`;
+                            else
+                                return '';
+                        } catch (e) {
                             return '';
+                        }
                     }
                 });
             } else {
@@ -140,7 +144,6 @@ function tablenameConvertor(params) {
     let n = params.replace("eks_", "");
     n = n.replace(/_/gi, ' ');
     n = n.replace(/[0-9]+/gi, ' ');
-
     return capitalizeFirstLetter(n);
 }
 
