@@ -3,6 +3,13 @@ let formName = '';
 let id = '';
 $(document).ready(function() {
     loadTable();
+
+    var url = new URL(window.location.href);
+    var id = url.searchParams.get("id");
+
+    if (comapny_id_array.indexOf(id) == -1) {
+        location.href = '../../index.html';
+    }
 });
 
 function loadTable() {
