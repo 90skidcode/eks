@@ -66,6 +66,11 @@ $(document).ready(function() {
         "user_id": user[0].user_id,
     }
     commonAjax('services.php', 'POST', data, '', '', '', { "functionName": "menuDom" });
+
+    let masterData = {
+        "query": "master",
+    }
+    commonAjax('database.php', 'POST', masterData, '', '', '', { "functionName": "masterDom" });
 });
 
 function menuDom(params) {
@@ -94,7 +99,25 @@ function menuDom(params) {
         $('.company-list .company').eq(0).trigger('click');
 }
 
+function masterDom(params) {
+    let masterMenu = ''
+    let n = params.message.split(',');
+    $(n).each(function(i, v) {
+        console.log(i, v);
+        masterMenu += `<a  href='../master/master.html?id=${v}' class="dropdown-item">${removeUnWanted(v)}</a>`;
+    });
+    $('.setting-menu').html(masterMenu);
+}
+
+function removeUnWanted(params) {
+    let r = params.replace('ma_', '');
+    r = r.replace('_master', '');
+    r = r.replace(/_/gi, ' ');
+    return capitalizeFirstLetter(r);
+}
+
 $(document).on('click', '.company', function() {
+    $('.company-menu').html(' ');
     let c = $(this).attr('data-id');
     localStorage.setItem('company-id', c);
     $('.selected-language').html($(this).text());
