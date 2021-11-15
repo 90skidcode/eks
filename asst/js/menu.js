@@ -181,6 +181,9 @@ function menuDom(params) {
 function masterDom(params) {
     let masterMenu = ''
     let n = params.message.split(',');
+    masterMenu += `<a  href='../user/user.html' class="dropdown-item">Employee</a>
+    <a  href='../customer/customer.html' class="dropdown-item">Customer</a>`;
+
     $(n).each(function(i, v) {
         if (v)
             masterMenu += `<a  href='../master/master.html?id=${v}' class="dropdown-item">${removeUnWanted(v)}</a>`;

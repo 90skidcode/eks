@@ -119,13 +119,25 @@ function tableDomGenerator(params, tableheader) {
         l = $(".dt-multilingual"),
         o = "../../../app-assets/";
 
+
     var n = e.DataTable({
         columns: tableheader,
         dom: '<"card-header border-bottom p-1"<"head-label"><"dt-action-buttons text-end"B>><"d-flex justify-content-between align-items-center mx-0 row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>t<"d-flex justify-content-between mx-0 row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
         data: params,
+        "scrollX": true,
+        lengthMenu: [25, 50, 75, 100, 500, 1000],
+        buttons: [{
+                className: "btn btn-outline-secondary me-2 excel",
+                text: feather.icons.clipboard.toSvg({ class: "font-small-4 me-50" }) + "Excel",
 
-        lengthMenu: [25, 50, 75, 100],
-        buttons: [{ extend: "collection", className: "btn btn-outline-secondary dropdown-toggle me-2", text: feather.icons.clipboard.toSvg({ class: "font-small-4 me-50" }) + "PDF" }, { text: feather.icons.plus.toSvg({ class: "me-50 font-small-4" }) + "Add New Record", className: "create-new btn btn-primary", attr: { "data-bs-toggle": "modal", "data-bs-target": "#modals-slide-in" }, init: function(e, t, a) { $(t).removeClass("btn-secondary") } }],
+            },
+            {
+                text: feather.icons.plus.toSvg({ class: "me-50 font-small-4" }) + "Add New Record",
+                className: "create-new btn btn-primary",
+                attr: { "data-bs-toggle": "modal", "data-bs-target": "#modals-slide-in" },
+                init: function(e, t, a) { $(t).removeClass("btn-secondary") }
+            }
+        ],
         language: { paginate: { previous: "&nbsp;", next: "&nbsp;" } },
         "order": [
             [0, 'desc']
