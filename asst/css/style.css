@@ -937,4 +937,21 @@ span.img-clear {
     li.nav-item.dropdown.dropdown-language {
         margin-left: 5px;
     }
+    .header-navbar .navbar-nav {
+        margin: 0;
+        -webkit-box-orient: horizontal;
+        -webkit-box-direction: normal;
+        -webkit-flex-flow: row wrap;
+        -ms-flex-flow: row wrap;
+        flex-flow: row wrap;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        flex-direction: row;
+    }
+}
+
+i.fi {
+    font-size: 20px;
+    color: #fff;
 }
