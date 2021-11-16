@@ -643,7 +643,6 @@ $(document).ready(function() {
         $(".btn-save").prop('disabled', true);
         var t = $(this)
         var file_data = t.prop('files')[0];
-        console.log(file_data);
         var form_data = new FormData();
         form_data.append('file', file_data);
 
