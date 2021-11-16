@@ -217,5 +217,5 @@ function setZeroForUndefined(params) {
     if (typeof(params) != 'undefined' && params) {
         return params;
     } else
-        return '';
+        return '0';
 }
