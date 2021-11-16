@@ -226,6 +226,7 @@ function listform(params) {
         menu += `<a  href='../table/table.html?id=${e.master_table_id}' class="dropdown-item">${e.master_form_name}</a>`;
     });
     $('.company-menu').html(menu);
+    getreadyDashbord();
 }
 
 $(document).on('click', '.share-link', function() {
