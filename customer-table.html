@@ -24,39 +24,8 @@
                     <img src="asst/img/logo-bg.png" class="w-100px">
                 </ul>
             </div>
-            <ul class="nav navbar-nav align-items-center ms-auto">
-                <li class="nav-item d-none d-lg-block"><a href="customer-dashboard.html" class="nav-link nav-link-style"><i class="ficon"
-                    data-feather="home"></i></a></li>
+            <ul class="nav navbar-nav align-items-center ms-auto menu-bar">
 
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="dropdown-flag" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="ficon" data-feather="grid"></i>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-flag">
-                        <a href="customer-table.html" class="dropdown-item">Attendance</a>
-                        <a class="dropdown-item">Filtration Machine Running</a>
-                        <a class="dropdown-item">Oil Level</a>
-                        <a class="dropdown-item">Oil Stock</a>
-                        <a class="dropdown-item">Hydraulic Oil Temp</a>
-                        <a class="dropdown-item">Oil Consumption</a>
-                        <a class="dropdown-item">PM Activities Carried Out</a>
-                    </div>
-                </li>
-                <li class="nav-item d-none d-lg-block"><a class="nav-link nav-link-style"><i class="ficon"
-                            data-feather="share-2"></i></a></li>
-                <li class="nav-item dropdown dropdown-language">
-                    <a class="nav-link dropdown-toggle" id="dropdown-flag" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="selected-language">SCL - Machine Shop - Oil - Padi</span></a>
-
-                </li>
-                <li class="nav-item dropdown dropdown-user">
-                    <a class="nav-link dropdown-toggle dropdown-user-link" id="dropdown-user" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <div class="user-nav d-sm-flex d-none"><span class="user-name fw-bolder">1000120</span><span class="user-status">Customer</span></div><span class="avatar"><img class="round"
-                                src="asst/img/eks-small-logo.png" alt="avatar" height="40" width="40"><span
-                                class="avatar-status-online"></span></span>
-                    </a>
-
-                </li>
             </ul>
         </div>
     </nav>
@@ -150,16 +119,6 @@
             noCalendar: true,
             dateFormat: "H:i",
         });
-
-
-        $(window).on('load', function() {
-            if (feather) {
-                feather.replace({
-                    width: 14,
-                    height: 14
-                });
-            }
-        })
     </script>
 </body>
 
