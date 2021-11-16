@@ -144,10 +144,7 @@ function tableDomGenerator(params, tableheader) {
         ],
     });
     $("div.head-label").html(`<h6 class="mb-0">${removeUnWanted(id)}</h6>`);
-    feather.replace({
-        width: 14,
-        height: 14
-    });
+
 }
 
 function tablenameConvertor(params) {

@@ -727,12 +727,3 @@ function tableToExcel(table, name, filename) {
 $(document).on('click', '.excel', function() {
     tableToExcel('base-table', $('.head-label h6').text(), $('.selected-language').text() + " - " + $('.head-label h6').text() + " - " + new Date().getTime())
 })
-
-$(window).on('load', function() {
-    if (feather) {
-        feather.replace({
-            width: 14,
-            height: 14
-        });
-    }
-})
