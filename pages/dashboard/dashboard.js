@@ -105,13 +105,13 @@ function dashboard(params) {
 
                         <td>
                             <div class="d-flex align-items-center">
-                                <span class="fw-bolder mb-25">${cu.Lube}</span>
-                                ${(cu.Hydralic > pre.Hydralic) ? up : down}
+                                <span class="fw-bolder mb-25">${cu.Corrected}</span>
+                                ${(cu.Corrected > pre.Corrected) ? up : down}
                             </div>
                         </td>
                         <td>
                             <div class="d-flex align-items-center">
-                                <span class="fw-bolder me-1">${cu.Lube}</span>
+                                <span class="fw-bolder me-1">${cu.Corrected}</span>
                             </div>
                         </td>
                     </tr>
@@ -124,13 +124,13 @@ function dashboard(params) {
 
                         <td>
                         <div class="d-flex align-items-center">
-                            <span class="fw-bolder mb-25">${cu.coolant_concentration}</span>
-                            ${(cu.Hydralic > pre.coolant_concentration) ? up : down}
+                            <span class="fw-bolder mb-25">${cu.Identified}</span>
+                            ${(cu.Identified > pre.Identified) ? up : down}
                         </div>
                     </td>
                     <td>
                         <div class="d-flex align-items-center">
-                            <span class="fw-bolder me-1">${cu.Lube}</span>
+                            <span class="fw-bolder me-1">${cu.Identified}</span>
                         </div>
                     </td>
                     </tr>
