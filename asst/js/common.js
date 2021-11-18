@@ -589,7 +589,8 @@ function dropdownValues(table_name, r) {
             "*": "*"
         },
         "condition": {
-            'company_id': c
+            'company_id': c,
+            'status': '1'
         },
         "like": ""
     }

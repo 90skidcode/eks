@@ -42,13 +42,13 @@ function dashboard(params) {
                         <td>
                             <div class="d-flex align-items-center">
                                 <span class="fw-bolder mb-25">${setZeroForUndefined(cu.Hydralic)}</span>
-                                ${(cu.Hydralic > pre.Hydralic) ? up : down}
+                                ${(cu.Hydralic >= pre.Hydralic) ? up : down}
                             </div>
                         </td>
 
                         <td>
                             <div class="d-flex align-items-center">
-                                <span class="fw-bolder me-1">${setZeroForUndefined(cu.Hydralic)}</span>
+                                <span class="fw-bolder me-1">${setZeroForUndefined(pre.Hydralic)}</span>
                             </div>
                         </td>
                     </tr>
@@ -62,12 +62,12 @@ function dashboard(params) {
                         <td>
                             <div class="d-flex align-items-center">
                                 <span class="fw-bolder mb-25">${setZeroForUndefined(cu.Lube)}</span>
-                                ${(cu.Lube > pre.Lube) ? up : down}
+                                ${(cu.Lube >= pre.Lube) ? up : down}
                             </div>
                         </td>
                         <td>
                             <div class="d-flex align-items-center">
-                                <span class="fw-bolder me-1">${setZeroForUndefined(cu.Lube)}</span>
+                                <span class="fw-bolder me-1">${setZeroForUndefined(pre.Lube)}</span>
                             </div>
                         </td>
                     </tr>
@@ -81,12 +81,12 @@ function dashboard(params) {
                         <td>
                         <div class="d-flex align-items-center">
                             <span class="fw-bolder mb-25">${setZeroForUndefined(cu.coolant_concentration)}</span>
-                            ${(cu.coolant_concentration > pre.coolant_concentration) ? up : down}
+                            ${(cu.coolant_concentration >= pre.coolant_concentration) ? up : down}
                         </div>
                     </td>
                     <td>
                         <div class="d-flex align-items-center">
-                            <span class="fw-bolder me-1">${setZeroForUndefined(cu.coolant_concentration)}</span>
+                            <span class="fw-bolder me-1">${setZeroForUndefined(pre.coolant_concentration)}</span>
                         </div>
                     </td>
                     </tr>
@@ -100,12 +100,12 @@ function dashboard(params) {
                         <td>
                             <div class="d-flex align-items-center">
                                 <span class="fw-bolder mb-25">${setZeroForUndefined(cu.Corrected)}</span>
-                                ${(cu.Corrected > pre.Corrected) ? up : down}
+                                ${(cu.Corrected >= pre.Corrected) ? up : down}
                             </div>
                         </td>
                         <td>
                             <div class="d-flex align-items-center">
-                                <span class="fw-bolder me-1">${setZeroForUndefined(cu.Corrected)}</span>
+                                <span class="fw-bolder me-1">${setZeroForUndefined(pre.Corrected)}</span>
                             </div>
                         </td>
                     </tr>
@@ -119,12 +119,12 @@ function dashboard(params) {
                         <td>
                         <div class="d-flex align-items-center">
                             <span class="fw-bolder mb-25">${setZeroForUndefined(cu.Identified)}</span>
-                            ${(cu.Identified > pre.Identified) ? up : down}
+                            ${(cu.Identified >= pre.Identified) ? up : down}
                         </div>
                     </td>
                     <td>
                         <div class="d-flex align-items-center">
-                            <span class="fw-bolder me-1">${setZeroForUndefined(cu.Identified)}</span>
+                            <span class="fw-bolder me-1">${setZeroForUndefined(pre.Identified)}</span>
                         </div>
                     </td>
                     </tr>
@@ -137,13 +137,13 @@ function dashboard(params) {
 
                         <td>
                         <div class="d-flex align-items-center">
-                            <span class="fw-bolder mb-25">${setZeroForUndefined(cu.Lube)}</span>
-                            ${(cu.Hydralic > pre.Hydralic) ? up : down}
+                            <span class="fw-bolder mb-25">${setZeroForUndefined(0)}</span>
+                            ${ up}
                         </div>
                     </td>
                     <td>
                         <div class="d-flex align-items-center">
-                            <span class="fw-bolder me-1">${setZeroForUndefined(cu.Lube)}</span>
+                            <span class="fw-bolder me-1">${setZeroForUndefined(0)}</span>
                         </div>
                     </td>
                     </tr>
@@ -156,13 +156,13 @@ function dashboard(params) {
 
                         <td>
                         <div class="d-flex align-items-center">
-                            <span class="fw-bolder mb-25">${setZeroForUndefined(cu.Lube)}</span>
-                            ${(cu.Hydralic > pre.Hydralic) ? up : down}
+                            <span class="fw-bolder mb-25">${setZeroForUndefined(0)}</span>
+                            ${ up }
                         </div>
                     </td>
                     <td>
                         <div class="d-flex align-items-center">
-                            <span class="fw-bolder me-1">${setZeroForUndefined(cu.Lube)}</span>
+                            <span class="fw-bolder me-1">${setZeroForUndefined(0)}</span>
                         </div>
                     </td>
                     </tr>
@@ -175,13 +175,13 @@ function dashboard(params) {
 
                         <td>
                         <div class="d-flex align-items-center">
-                            <span class="fw-bolder mb-25">${setZeroForUndefined(cu.Lube)}</span>
-                            ${(cu.Hydralic > pre.Hydralic) ? up : down}
+                            <span class="fw-bolder mb-25">${setZeroForUndefined(0)}</span>
+                            ${ up }
                         </div>
                     </td>
                     <td>
                         <div class="d-flex align-items-center">
-                            <span class="fw-bolder me-1">${setZeroForUndefined(cu.Lube)}</span>
+                            <span class="fw-bolder me-1">${setZeroForUndefined(0)}</span>
                         </div>
                     </td>
                     </tr>
@@ -195,13 +195,13 @@ function dashboard(params) {
 
                         <td>
                         <div class="d-flex align-items-center">
-                            <span class="fw-bolder mb-25">${setZeroForUndefined(cu.Lube)}</span>
-                            ${(cu.Hydralic > pre.Hydralic) ? up : down}
+                            <span class="fw-bolder mb-25">${setZeroForUndefined(0)}</span>
+                            ${ up }
                         </div>
                     </td>
                     <td>
                         <div class="d-flex align-items-center">
-                            <span class="fw-bolder me-1">${setZeroForUndefined(cu.Lube)}</span>
+                            <span class="fw-bolder me-1">${setZeroForUndefined(0)}</span>
                         </div>
                     </td>
                     </tr>

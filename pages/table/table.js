@@ -147,7 +147,6 @@ function tableDomGenerator(params, tableheader) {
         buttons: [{
                 className: "btn btn-outline-secondary me-2 excel",
                 text: feather.icons.clipboard.toSvg({ class: "font-small-4 me-50" }) + "Excel",
-
             },
             {
                 text: feather.icons.plus.toSvg({ class: "me-50 font-small-4" }) + "Add New Record",
@@ -172,7 +171,6 @@ function tablenameConvertor(params) {
     n = n.replace(/[0-9]+/gi, ' ');
     return capitalizeFirstLetter(n);
 }
-
 
 
 $(document).on('click', '.btn-save', function() {
