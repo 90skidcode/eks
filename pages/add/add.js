@@ -107,15 +107,15 @@ function menulist(params) {
                 noCalendar: true,
                 dateFormat: "H:i",
             });
-            $(this).closest('form').find('.select2').each(function() {
-                if ($(this).html().trim() == 'undefined') {
-                    let t = $(this).closest('div');
-                    let c = $(this).attr('data-id');
-                    let n = $(this).attr('name');
-                    t.find('.select2').remove();
-                    t.append(`<select class="form-control select2 ${n} ${c}"  data-id="${c}" name="${n}"> ${selectJson[c]} </select>`);
-                    $('.select2').select2();
-                }
+            $(this).closest('form').find('select.select2').each(function() {
+                let t = $(this).closest('div');
+                let c = $(this).attr('data-id');
+                let n = $(this).attr('name');
+                t.find('.select2').remove();
+                t.append(`<select class="form-control select2 ${n} ${c}"  data-id="${c}" name="${n}"> ${selectJson[c]} </select>`);
+                $('.select2').select2();
+                $('.select2').trigger('change');
+
             })
         },
         // (Optional)

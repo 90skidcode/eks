@@ -545,7 +545,7 @@ function domGenerator(j) {
                     <input type="text" name="${j.name}" id="${j.name}" class="form-control post date" placeholder="MM/DD/YYYY" aria-label="MM/DD/YYYY" />`
         case 'autocomplete':
             return `<label class="form-label" for="${j.name}">${j.label}</label>
-                    <input type="text" name="${j.name}" class="form-control time ${j.name}" id="${j.name}"placeholder="00:00" aria-label="00:00"  /> `;
+                    <input type="text" name="${j.name}" class="form-control  ${j.name}" id="${j.name}"placeholder="00:00" aria-label="00:00"  /> `;
         case 'textarea':
             return `<label class="form-label" for="${j.name}">${j.label}</label>                    
                     <select class="form-control select2 ${j.name} ${r}" data-id="${r}" name="${j.name}">
