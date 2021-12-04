@@ -111,11 +111,11 @@ function menulist(params) {
                 let t = $(this).closest('div');
                 let c = $(this).attr('data-id');
                 let n = $(this).attr('name');
+                let r = $(this).attr('required');
                 t.find('.select2').remove();
-                t.append(`<select class="form-control select2 ${n} ${c}"  data-id="${c}" name="${n}"> ${selectJson[c]} </select>`);
+                t.append(`<select class="form-control select2 ${n} ${c}"  data-id="${c}" name="${n}"  ${r}> ${selectJson[c]} </select>`);
                 $('.select2').select2();
                 $('.select2').trigger('change');
-
             })
         },
         // (Optional)
@@ -136,20 +136,21 @@ function menulist(params) {
 }
 let clicked = '';
 $(document).on('click', '.btn-save', function() {
-
     let c = $(this).closest('.card').find('form').attr('class');
     let t = $(this).closest('.card').find('form').attr('data-table');
-    let v = $("." + c).repeaterVal();
-    clicked = $("." + c);
-    $.each(v[t], function(i, val) {
-        let tempdata = {
-            "query": "add",
-            "key": t,
-            "values": val
-        }
-        tempdata["values"]['status'] = 1;
-        commonAjax('database.php', 'POST', tempdata, '', '', '', { "functionName": "successCount" });
-    });
+    if (checkRequired("." + c)) {
+        let v = $("." + c).repeaterVal();
+        clicked = $("." + c);
+        $.each(v[t], function(i, val) {
+            let tempdata = {
+                "query": "add",
+                "key": t,
+                "values": val
+            }
+            tempdata["values"]['status'] = 1;
+            commonAjax('database.php', 'POST', tempdata, '', '', '', { "functionName": "successCount" });
+        });
+    }
 });
 
 function successCount(params) {

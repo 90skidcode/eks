@@ -153,8 +153,6 @@ function getParameter(parameterName) {
 }
 
 
-
-
 /**
  * ShoW Toast
  * @param {string} msg Message
@@ -510,6 +508,7 @@ $('input').on("wheel mousewheel ", function(e) {
  * @param {Numbers} value eg : 1234567
  * @returns Rs.12,34,567.00
  */
+
 function numberWithCommas(value) {
     let x = 0;
     (typeof(value) != 'undefined') ? x = value: x = 0;
@@ -528,43 +527,46 @@ function capitalizeFirstLetter(string) {
 
 function domGenerator(j) {
     let r = randomString(16, 'aA');
+    let star = (j.required == true) ? '<span class="red">*</span>' : '';
+    let required = (j.required == true) ? 'required' : '';
     switch (j.type) {
         case 'text':
-            return `<label class="form-label" for="${j.name}">${j.label}</label>
-                    <input type="text" name="${j.name}" class="form-control ${j.name}" id="${j.name}" placeholder=""  /> `;
+            return `<label class="form-label" for="${j.name}">${j.label}${star}</label>
+                    <input type="text" name="${j.name}" class="form-control ${j.name}" id="${j.name}"  placeholder="" ${required} /> `;
         case 'number':
-            return `<label class="form-label" for="${j.name}">${j.label}</label>
-                    <input type="number" name="${j.name}" class="form-control ${j.name}" id="${j.name}" placeholder=""  /> `;
+            return `<label class="form-label" for="${j.name}">${j.label}${star}</label>
+                    <input type="number" name="${j.name}" class="form-control ${j.name}" id="${j.name}"  placeholder="" ${required} /> `;
         case 'file':
-            return `<label class="form-label" for="${j.name}">${j.label}</label>
-                    <input type="file"  class="form-control ${j.name}s" id="${j.name}s" data-id="${r}gg"  accept="image/*" placeholder=""  /> 
+            return `<label class="form-label" for="${j.name}">${j.label}${star}</label>
+                    <input type="file"  class="form-control ${j.name}s" id="${j.name}s" data-id="${r}gg"  accept="image/*"  placeholder="" ${required} /> 
                     <div class="progress-bar"></div>
-                    <input type="hidden" name="${j.name}" class="${j.name}" id="${r}gg"  placeholder=""  /> `;
+                    <input type="hidden" name="${j.name}" class="${j.name}" id="${r}gg"   placeholder="" ${required} /> `;
         case 'date':
-            return `<label class="form-label " for="${j.name}">${j.label}</label>
-                    <input type="text" name="${j.name}" id="${j.name}" class="form-control post date" placeholder="MM/DD/YYYY" aria-label="MM/DD/YYYY" />`
+            return `<label class="form-label " for="${j.name}">${j.label}${star}</label>
+                    <input type="text" name="${j.name}" id="${j.name}" class="form-control post date" placeholder="MM/DD/YYYY" aria-label="MM/DD/YYYY" ${required}  />`
         case 'autocomplete':
-            return `<label class="form-label" for="${j.name}">${j.label}</label>
-                    <input type="text" name="${j.name}" class="form-control  ${j.name}" id="${j.name}"placeholder="00:00" aria-label="00:00"  /> `;
+            return `<label class="form-label" for="${j.name}">${j.label}${star}</label>
+                    <input type="text" name="${j.name}" class="form-control  ${j.name}" id="${j.name}"placeholder="00:00" aria-label="00:00"  ${required} /> `;
         case 'textarea':
-            return `<label class="form-label" for="${j.name}">${j.label}</label>                    
-                    <select class="form-control select2 ${j.name} ${r}" data-id="${r}" name="${j.name}">
+            return `<label class="form-label" for="${j.name}">${j.label}${star}</label>                    
+                    <select class="form-control select2 ${j.name} ${r}" data-id="${r}" name="${j.name}" ${required} >
                     ${dropdownValues(j.name, r)}
                     </select>`;
             /* return `<label class="form-label" for="${j.name}">${j.label}</label>
-                     <textarea type="text" name="${j.name}" class="form-control ${j.name}" id="${j.name}" placeholder=""  /></textarea>`;*/
+                     <textarea type="text" name="${j.name}" class="form-control ${j.name}" id="${j.name}"  placeholder="" ${required} /></textarea>`;*/
         case 'radio-group':
-            return `<label class="form-label" for="${j.name}">${j.label}</label><br>
+            return `<label class="form-label" for="${j.name}">${j.label}${star}</label><br>
                     ${radioButtonDom(j)}`;
         case 'select':
-            return `<label class="form-label" for="${j.name}">${j.label}</label>                    
-                    <select class="form-control select2 ${j.name} ${r}" data-id="${r}" name="${j.name}">
+            return `<label class="form-label" for="${j.name}">${j.label}${star}</label>                    
+                    <select class="form-control select2 ${j.name} ${r}" data-id="${r}" name="${j.name}" ${required} >
                     ${dropdownValues(j.name, r)}
                     </select>`;
         default:
             return ``;
     }
 }
+
 /** <input list="${r}" class="form-select" name="${j.name}"> 
  * required="${(j.required)  ? true :  false}"
  */
@@ -574,6 +576,7 @@ function domGenerator(j) {
  * @param {*} table_name 
  * @param {*} r 
  */
+
 var dropdownValuesList = [];
 
 function dropdownValues(table_name, r) {
@@ -610,11 +613,12 @@ function dropdownValues(table_name, r) {
     }
     return v;
 }
+
 var selectJson = [];
 
 function domdropdownValues(params, className, table_name) {
     dropdownValuesList[table_name] = params;
-    let html = '';
+    let html = `<option value=''>Select</option>`;
     $.each(params, function(i, v) {
         html += `<option value='${eval('v.ma_' + table_name + '_master_id')}'>${v.value}</option>`;
     });
@@ -703,7 +707,7 @@ $(document).on('click', '.img-clear', function() {
     $(this).closest('.mb-1').find('[type=file]').val('');
     $(this).closest('.img-area').remove();
     showToast("File removed successfully", 'success');
-})
+});
 
 $(document).on('click', '.close', function() {
     $(this).closest('.toast').toast('hide');
@@ -724,6 +728,24 @@ function tableToExcel(table, name, filename) {
     link.href = uri + base64(format(template, ctx));
     link.click();
 }
+
 $(document).on('click', '.excel', function() {
     tableToExcel('base-table', $('.head-label h6').text(), $('.selected-language').text() + " - " + $('.head-label h6').text() + " - " + new Date().getTime())
-})
+});
+
+/**
+ * Required field checker
+ * @param {string} selector  ID/Class for the Form
+ */
+
+function checkRequired(selector) {
+    var flag = true;
+    $(selector + " [required]").each(function(index) {
+        if (!$(this).val()) {
+            $(this).addClass('is-invalid');
+            flag = false;
+        } else
+            $(this).removeClass('is-invalid');
+    });
+    return flag;
+}
