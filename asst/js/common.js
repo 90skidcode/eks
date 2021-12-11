@@ -179,9 +179,7 @@ function showToast(msg, type) {
 
     $('#notification-toast').append(toastHTML);
     $('#notification-toast .toast').toast('show');
-    setTimeout(function() {
-        $('#notification-toast .toast:first-child').remove();
-    }, 5000);
+
 }
 
 
