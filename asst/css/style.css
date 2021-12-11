@@ -972,3 +972,26 @@ i.fi {
 .select2-container--default .select2-selection--single .select2-selection__rendered {
     line-height: 34px !important;
 }
+
+.card-company-table h5.counter {
+    margin: 0;
+    padding: 0 5px;
+    font-size: 17px;
+    text-align: center;
+    color: #7367f0;
+    font-weight: bolder;
+}
+
+.card-company-table p.date-field {
+    margin: 0;
+    font-size: 10px;
+    font-weight: 500;
+}
+
+.card-company-table tbody tr td:first-child div.text-center {
+    text-align: left !important;
+}
+
+.card-company-table table.table thead tr {
+    text-align: center;
+}

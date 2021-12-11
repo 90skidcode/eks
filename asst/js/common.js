@@ -164,7 +164,7 @@ function showToast(msg, type) {
     let icon = '';
     (type == 'error') ? background = 'badge-danger': background = 'badge-success';
     (type == 'success') ? icon = 'anticon-check-circle': icon = 'anticon-info-circle'
-    var toastHTML = `<div class="toast fade hide ${background}">
+    var toastHTML = `<div class="toast fade show ${background}">
         <div class="toast-header ">
             <i class="anticon ${icon} m-r-5 text-white"></i>
             <strong class="mr-auto">${type.toUpperCase()}</strong>
@@ -178,7 +178,6 @@ function showToast(msg, type) {
     </div>`;
 
     $('#notification-toast').append(toastHTML);
-    $('#notification-toast .toast').toast('show');
 
 }
 
@@ -401,8 +400,9 @@ function multipleSetValue(responce, imageFlag) {
             setValue(i, v)
         })
     }
-    docShow(imageFlag);
-    $('.select2').trigger('change')
+    docShow();
+    $('.select2').trigger('change');
+
 }
 
 /**
@@ -410,33 +410,38 @@ function multipleSetValue(responce, imageFlag) {
  * @param {Booleen} imageFlag 
  */
 function docShow(imageFlag, ele) {
-    if (imageFlag) {
-        (ele) ? uploadData = ele.val().split(","): uploadData = $('[name=customer_doc]').val().split(",");
-        /**
-         * To preload Image in edit  
-         */
-        let html = '';
-        if (uploadData.toString() != "" && uploadData) {
-            $.each(uploadData, function(i, v) {
-                let randomClass = randomString(16, 'aA');
-                html += ` <div class="col-md-3 ${randomClass}" data-val="${v}">
-                            <span class="badge-danger float-right border-radius-round position-absolute pointer remove-img" title="remove">
-                                <span class="icon-holder">
-                                    <i class="anticon anticon-close"></i>
-                                </span>
-                            </span>
-                            <img class="w-100" src="http://glowmedia.in/frontoffice/admin/api/uploads/${v}" alt="">                        
-                        </div>`;
-            })
-            if (ele) {
-                $("#v-pills-tabContent .image-prev-area").append(html);
-                $("#v-pills-tabContent .image-prev-area").removeClass('d-none');
-            } else {
-                $(".image-prev-area").append(html);
-                $(".image-prev-area").removeClass('d-none');
-            }
-        }
-    }
+    /**  if (imageFlag) {
+          (ele) ? uploadData = ele.val().split(","): uploadData = $('[name=customer_doc]').val().split(",");
+          
+           * To preload Image in edit  
+          
+          let html = '';
+          if (uploadData.toString() != "" && uploadData) {
+              $.each(uploadData, function(i, v) {
+                  let randomClass = randomString(16, 'aA');
+                  html += ` <div class="col-md-3 ${randomClass}" data-val="${v}">
+                              <span class="badge-danger float-right border-radius-round position-absolute pointer remove-img" title="remove">
+                                  <span class="icon-holder">
+                                      <i class="anticon anticon-close"></i>
+                                  </span>
+                              </span>
+                              <img class="w-100" src="http://glowmedia.in/frontoffice/admin/api/uploads/${v}" alt="">                        
+                          </div>`;
+              })
+              if (ele) {
+                  $("#v-pills-tabContent .image-prev-area").append(html);
+                  $("#v-pills-tabContent .image-prev-area").removeClass('d-none');
+              } else {
+                  $(".image-prev-area").append(html);
+                  $(".image-prev-area").removeClass('d-none');
+              }
+          }
+      } */
+
+    $('input[type="hidden"]').each(function() {
+        let i = $(this).val();
+        $(this).closest('div').append(`<div class="img-area"><span class="img-clear">X</span> <img src="${serverUrl}/uploads/${i}" width="140" height="140"> </div>`)
+    })
 }
 
 /**
@@ -525,8 +530,8 @@ function capitalizeFirstLetter(string) {
 
 function domGenerator(j) {
     let r = randomString(16, 'aA');
-    let star = (j.required == true) ? '<span class="red">*</span>' : '';
-    let required = (j.required == true) ? 'required' : '';
+    let star = (j.required == 'true') ? '<span class="red">*</span>' : '';
+    let required = (j.required == 'true') ? 'required' : '';
     switch (j.type) {
         case 'text':
             return `<label class="form-label" for="${j.name}">${j.label}${star}</label>
@@ -537,7 +542,7 @@ function domGenerator(j) {
         case 'file':
             return `<label class="form-label" for="${j.name}">${j.label}${star}</label>
                     <input type="file"  class="form-control ${j.name}s" id="${j.name}s" data-id="${r}gg"  accept="image/*"  placeholder="" ${required} /> 
-                    <div class="progress-bar"></div>
+                    <div class="progress-bar"  data-ids="${r}gg"></div>
                     <input type="hidden" name="${j.name}" class="${j.name}" id="${r}gg"   placeholder="" ${required} /> `;
         case 'date':
             return `<label class="form-label " for="${j.name}">${j.label}${star}</label>
@@ -648,7 +653,7 @@ $(document).ready(function() {
         var file_data = t.prop('files')[0];
         var form_data = new FormData();
         form_data.append('file', file_data);
-
+        loader(true)
         $.ajax({
             xhr: function() {
                 var xhr = new window.XMLHttpRequest();
@@ -685,13 +690,15 @@ $(document).ready(function() {
                     $("#" + t.attr('data-id')).val(' ');
                     $("#" + t.attr('data-id')).val(dataResult.result);
                     t.closest('div').find('.img-area').remove();
-                    t.closest('div').append(`<div class="img-area"><span class="img-clear">X</span> <img src="${serverUrl}/uploads/${dataResult.result}" width="150" height="150"> </div>`)
+                    t.closest('div').append(`<div class="img-area"><span class="img-clear">X</span> <img src="${serverUrl}/uploads/${dataResult.result}" width="140" height="140"> </div>`)
                 } else {
                     showToast(dataResult.message, 'error');
                 }
+                loader(false);
             },
             error: function(data) {
                 $(".btn-save").prop('disabled', false);
+                loader(false);
             },
             cache: false,
             contentType: false,

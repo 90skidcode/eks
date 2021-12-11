@@ -163,7 +163,6 @@ $(document).on('click', '.btn-delete', function() {
                 "status": 0
             },
             "condition": {}
-
         }
         tempdata['condition']['company_master_id'] = $(this).attr('data-id');
         commonAjax('database.php', 'POST', tempdata, '', '', '', { "functionName": "successCount" });

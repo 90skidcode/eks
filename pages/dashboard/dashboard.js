@@ -23,6 +23,7 @@ function dashboard(params) {
 
     let cu = params.result.current_month;
     let pre = params.result.pre_month;
+    let date = params.result.date;
     let dashboardHtml = ` 
     <div class="card-body p-0">
         <div class="table-responsive">
@@ -38,151 +39,151 @@ function dashboard(params) {
                 <tbody>
                     <tr>
                         <td>
-                            <div class="d-flex align-items-center">
+                            <div class="text-center">
                                 <div class="fw-bolder">Hyd Oil Cons</div>
                             </div>
                         </td>
                         <td>
-                            <div class="d-flex align-items-center">
-                                <span class="fw-bolder mb-25">${setZeroForUndefined(cu.Hydralic)}</span>
+                            <div class="text-center">
+                                <span class="fw-bolder mb-25">${setZeroForUndefined(cu.Hydralic)} ${setDate(date.Hydralic)}</span>
                                 ${(cu.Hydralic >= pre.Hydralic) ? up : down}
                             </div>
                         </td>
 
                         <td>
-                            <div class="d-flex align-items-center">
+                            <div class="text-center">
                                 <span class="fw-bolder me-1">${setZeroForUndefined(pre.Hydralic)}</span>
                             </div>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <div class="d-flex align-items-center">
+                            <div class="text-center">
                                 <div class="fw-bolder">Lube Oil Cons</div>
                                
                             </div>
                         </td>
                         <td>
-                            <div class="d-flex align-items-center">
-                                <span class="fw-bolder mb-25">${setZeroForUndefined(cu.Lube)}</span>
+                            <div class="text-center">
+                                <span class="fw-bolder mb-25">${setZeroForUndefined(cu.Lube)}  ${setDate(date.Lube)}</span>
                                 ${(cu.Lube >= pre.Lube) ? up : down}
                             </div>
                         </td>
                         <td>
-                            <div class="d-flex align-items-center">
+                            <div class="text-center">
                                 <span class="fw-bolder me-1">${setZeroForUndefined(pre.Lube)}</span>
                             </div>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <div class="d-flex align-items-center">
+                            <div class="text-center">
                                 <div class="fw-bolder">Coolant Consumption</div>
                             </div>
                         </td>
 
                         <td>
-                        <div class="d-flex align-items-center">
-                            <span class="fw-bolder mb-25">${setZeroForUndefined(cu.coolant_concentration)}</span>
+                        <div class="text-center">
+                            <span class="fw-bolder mb-25">${setZeroForUndefined(cu.coolant_concentration)}   ${setDate(date.coolant_concentration)}</span>
                             ${(cu.coolant_concentration >= pre.coolant_concentration) ? up : down}
                         </div>
                     </td>
                     <td>
-                        <div class="d-flex align-items-center">
+                        <div class="text-center">
                             <span class="fw-bolder me-1">${setZeroForUndefined(pre.coolant_concentration)}</span>
                         </div>
                     </td>
                     </tr>
                     <tr>
                         <td>
-                            <div class="d-flex align-items-center">
+                            <div class="text-center">
                                 <div class="fw-bolder">Abnormalities Created</div>
                             </div>
                         </td>
 
                         <td>
-                            <div class="d-flex align-items-center">
-                                <span class="fw-bolder mb-25">${setZeroForUndefined(cu.Corrected)}</span>
+                            <div class="text-center">
+                                <span class="fw-bolder mb-25">${setZeroForUndefined(cu.Corrected)}   ${setDate(date.Corrected)}</span>
                                 ${(cu.Corrected >= pre.Corrected) ? up : down}
                             </div>
                         </td>
                         <td>
-                            <div class="d-flex align-items-center">
+                            <div class="text-center">
                                 <span class="fw-bolder me-1">${setZeroForUndefined(pre.Corrected)}</span>
                             </div>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <div class="d-flex align-items-center">
+                            <div class="text-center">
                                 <div class="fw-bolder">Abnormalities Closed</div>
                             </div>
                         </td>
 
                         <td>
-                        <div class="d-flex align-items-center">
-                            <span class="fw-bolder mb-25">${setZeroForUndefined(cu.Identified)}</span>
+                        <div class="text-center">
+                            <span class="fw-bolder mb-25">${setZeroForUndefined(cu.Identified)}   ${setDate(date.Identified)}</span>
                             ${(cu.Identified >= pre.Identified) ? up : down}
                         </div>
                     </td>
                     <td>
-                        <div class="d-flex align-items-center">
+                        <div class="text-center">
                             <span class="fw-bolder me-1">${setZeroForUndefined(pre.Identified)}</span>
                         </div>
                     </td>
                     </tr>
                     <tr>
                         <td>
-                            <div class="d-flex align-items-center">
+                            <div class="text-center">
                                 <div class="fw-bolder">Low % Machines Count</div>
                             </div>
                         </td>
 
                         <td>
-                        <div class="d-flex align-items-center">
-                            <span class="fw-bolder mb-25">${setZeroForUndefined(cu.coolant_concentration)}</span>
+                        <div class="text-center">
+                            <span class="fw-bolder mb-25">${setZeroForUndefined(cu.coolant_concentration)}   ${setDate(date.coolant_concentration)}</span>
                         </div>
                     </td>
                     <td>
-                        <div class="d-flex align-items-center">
+                        <div class="text-center">
                             <span class="fw-bolder me-1">${setZeroForUndefined(pre.coolant_concentration)}</span>
                         </div>
                     </td>
                     </tr>
                     <tr>
                         <td>
-                            <div class="d-flex align-items-center">
+                            <div class="text-center">
                                 <div class="fw-bolder">Low Level Machines</div>
                             </div>
                         </td>
 
                         <td>
-                        <div class="d-flex align-items-center">
-                            <span class="fw-bolder mb-25">${setZeroForUndefined(cu.oil_level_abnormality)}</span>
+                        <div class="text-center">
+                            <span class="fw-bolder mb-25">${setZeroForUndefined(cu.oil_level_abnormality)}   ${setDate(date.oil_level_abnormality)}</span>
                             ${ up }
                         </div>
                     </td>
                     <td>
-                        <div class="d-flex align-items-center">
+                        <div class="text-center">
                             <span class="fw-bolder me-1">${setZeroForUndefined(pre.oil_level_abnormality)}</span>
                         </div>
                     </td>
                     </tr>
                     <tr>
                         <td>
-                            <div class="d-flex align-items-center">
+                            <div class="text-center">
                                 <div class="fw-bolder">Leak Identified</div>
                             </div>
                         </td>
 
                         <td>
-                        <div class="d-flex align-items-center">
-                            <span class="fw-bolder mb-25">${setZeroForUndefined(cu.leak)}</span>
+                        <div class="text-center">
+                            <span class="fw-bolder mb-25">${setZeroForUndefined(cu.leak)}   ${setDate(date.leak)}</span>
                             ${ up }
                         </div>
                     </td>
                     <td>
-                        <div class="d-flex align-items-center">
+                        <div class="text-center">
                             <span class="fw-bolder me-1">${setZeroForUndefined(pre.leak)}</span>
                         </div>
                     </td>
@@ -190,19 +191,19 @@ function dashboard(params) {
 
                     <tr>
                         <td>
-                            <div class="d-flex align-items-center">
+                            <div class="text-center">
                                 <div class="fw-bolder">Leak Arrested</div>
                             </div>
                         </td>
 
                         <td>
-                        <div class="d-flex align-items-center">
+                        <div class="text-center">
                             <span class="fw-bolder mb-25">${setZeroForUndefined(0)}</span>
                             ${ up }
                         </div>
                     </td>
                     <td>
-                        <div class="d-flex align-items-center">
+                        <div class="text-center">
                             <span class="fw-bolder me-1">${setZeroForUndefined(0)}</span>
                         </div>
                     </td>
@@ -217,7 +218,21 @@ function dashboard(params) {
 
 function setZeroForUndefined(params) {
     if (typeof(params) != 'undefined' && params) {
-        return params;
+        return '<h5 class="counter">' + params + '</h5>';
     } else
         return '0';
+}
+
+
+function setDate(params) {
+    if (params) {
+        let p = params.split(" ");
+        var timeString = p[1];
+        var H = +timeString.substr(0, 2);
+        var h = H % 12 || 12;
+        var ampm = (H < 12 || H === 24) ? "AM" : "PM";
+        timeString = h + timeString.substr(2, 3) + ' ' + ampm;
+        return ` <p class="date-field"> ${p[0]}  ${timeString} </p>`
+    } else
+        return '';
 }

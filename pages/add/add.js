@@ -112,10 +112,12 @@ function menulist(params) {
                 let c = $(this).attr('data-id');
                 let n = $(this).attr('name');
                 let r = $(this).attr('required');
+                let v = $(this).val();
                 t.find('.select2').remove();
-                t.append(`<select class="form-control select2 ${n} ${c}"  data-id="${c}" name="${n}"  ${r}> ${selectJson[c]} </select>`);
+                t.append(`<select class="form-control select2 ${n} ${c}"  data-id="${c}" name="${n}"  ${r}> ${setselected(selectJson[c],v)} </select>`);
                 $('.select2').select2();
                 $('.select2').trigger('change');
+                t.closest('select').val(v);
             })
         },
         // (Optional)
@@ -136,6 +138,7 @@ function menulist(params) {
 }
 let clicked = '';
 $(document).on('click', '.btn-save', function() {
+    loader(true);
     $(this).attr('disabled', 'disabled');
     let c = $(this).closest('.card').find('form').attr('class');
     let t = $(this).closest('.card').find('form').attr('data-table');
@@ -157,8 +160,18 @@ $(document).on('click', '.btn-save', function() {
 });
 
 function successCount(params) {
+    loader(true);
     (params.status_code == 200) ? showToast('Add Successfully', 'success'): showToast('Please try again!!', 'error');
     $('[data-repeater-list]').empty();
     $('[data-repeater-create]').click();
+    loader(false);
+
+}
+
+function setselected(params, v) {
+    if (v) {
+        return params.replace(`='${v}'`, `='${v}' selected`);
+    } else
+        return params;
 
 }
