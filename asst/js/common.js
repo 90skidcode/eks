@@ -181,7 +181,7 @@ function showToast(msg, type) {
     $('#notification-toast .toast').toast('show');
     setTimeout(function() {
         $('#notification-toast .toast:first-child').remove();
-    }, 50000);
+    }, 5000);
 }
 
 

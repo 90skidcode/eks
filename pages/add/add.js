@@ -136,6 +136,7 @@ function menulist(params) {
 }
 let clicked = '';
 $(document).on('click', '.btn-save', function() {
+    $(this).attr('disabled', 'disabled');
     let c = $(this).closest('.card').find('form').attr('class');
     let t = $(this).closest('.card').find('form').attr('data-table');
     if (checkRequired("." + c)) {
@@ -150,6 +151,7 @@ $(document).on('click', '.btn-save', function() {
             tempdata["values"]['status'] = 1;
             commonAjax('database.php', 'POST', tempdata, '', '', '', { "functionName": "successCount" });
         });
+        $(this).removeAttr('disabled', 'disabled');
     }
 });
 
