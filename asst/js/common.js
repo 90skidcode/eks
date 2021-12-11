@@ -541,7 +541,7 @@ function domGenerator(j) {
                     <input type="number" name="${j.name}" class="form-control ${j.name}" id="${j.name}"  placeholder="" ${required} /> `;
         case 'file':
             return `<label class="form-label" for="${j.name}">${j.label}${star}</label>
-                    <input type="file"  class="form-control ${j.name}s" id="${j.name}s" data-id="${r}gg"  accept="image/*"  capture="environment" placeholder="" ${required} /> 
+                    <input type="file"  class="form-control ${j.name}s" id="${j.name}s" data-id="${r}gg"  accept=".png,.jpg,.jpeg,.gif" placeholder="" ${required} /> 
                     <div class="progress-bar"  data-ids="${r}gg"></div>
                     <input type="hidden" name="${j.name}" class="${j.name}" id="${r}gg"   placeholder="" ${required} /> `;
         case 'date':
