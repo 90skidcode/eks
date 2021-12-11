@@ -152,7 +152,8 @@ $(document).on('click', '.btn-save', function() {
             commonAjax('database.php', 'POST', tempdata, '', '', '', { "functionName": "successCount" });
         });
         $(this).removeAttr('disabled', 'disabled');
-    }
+    } else
+        $(this).removeAttr('disabled', 'disabled');
 });
 
 function successCount(params) {
